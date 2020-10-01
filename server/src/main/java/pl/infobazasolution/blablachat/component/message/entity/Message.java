@@ -10,10 +10,10 @@ public class Message {
     private User receiver;
     private String content;
 
-    private Date created_at;
-    private Date updated_at;
-    private Date deleted_at;
-    private Date read_at;
+    private Date createdAt;
+    private Date updatedAt;
+    private Date deletedAt;
+    private Date readAt;
 
     public Integer getId() {
         return id;
@@ -48,34 +48,34 @@ public class Message {
     }
 
     public Date getCreatedAt() {
-        return created_at;
+        return createdAt;
     }
 
-    public void setCreatedAt(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {
-        return updated_at;
+        return updatedAt;
     }
 
-    public void setUpdatedAt(Date updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Date getDeletedAt() {
-        return deleted_at;
+        return deletedAt;
     }
 
-    public void setDeleted_at(Date deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     public Date getReadAt() {
-        return read_at;
+        return readAt;
     }
 
-    public void setReadAt(Date read_at) {
-        this.read_at = read_at;
+    public void setReadAt(Date readAt) {
+        this.readAt = readAt;
     }
 }

@@ -7,7 +7,7 @@ public class UserDto {
     private String nick;
     private String email;
 
-    private Date created_at;
+    private Date createdAt;
 
     public Integer getId() {
         return id;
@@ -34,10 +34,10 @@ public class UserDto {
     }
 
     public Date getCreatedAt() {
-        return created_at;
+        return createdAt;
     }
 
-    public void setCreatedAt(Date created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
