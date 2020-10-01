@@ -1,0 +1,7 @@
+ private int id;
+    private String nick;
+    private String password;
+    private String email;
+    private Timestamp created_at;
+    private Timestamp updated_at;
+    private Timestamp deleted_at;
