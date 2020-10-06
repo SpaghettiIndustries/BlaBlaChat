@@ -9,6 +9,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.PathParam;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Path("/test")
@@ -33,5 +36,17 @@ public class TestController {
         }
 
         return "EMPTY";
+    }
+
+    @GET
+    @Path("/hibernate_all")
+    public String hibernateTestAll() {
+        ArrayList<String> users = new ArrayList<String>();
+
+        userDao.selectAllUsers().forEach(user -> {
+            users.add(user.getNick());
+        });
+
+        return users.toString();
     }
 }
