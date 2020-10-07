@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -14,15 +15,18 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
+    @NotBlank
     @Column(name = "nick")
     private String nick;
 
     @Column(name = "email")
     private String email;
 
+    @NotBlank
     @Column(name = "password")
     private String password;
 
+    @NotBlank
     @Column(name = "created_at")
     private Date createdAt;
 
