@@ -1,16 +1,38 @@
 package pl.infobazasolution.blablachat.component.user.entity;
 
-import java.sql.Timestamp;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.time.ZonedDateTime;
 
+@Entity
+@Table(name = "user_")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", allocationSize = 1)
+    @Column(name = "id")
     private Integer id;
+
+    @NotBlank
+    @Column(name = "nick")
     private String nick;
+
+    @Column(name = "email")
     private String email;
+
+    @NotBlank
+    @Column(name = "password")
     private String password;
 
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-    private Timestamp deletedAt;
+    @NotBlank
+    @Column(name = "created_at")
+    private ZonedDateTime createdAt;
+
+    @Column(name = "upZonedDateTimed_at")
+    private ZonedDateTime upZonedDateTimedAt;
+
+    @Column(name = "deleted_at")
+    private ZonedDateTime deletedAt;
 
     public Integer getId() {
         return id;
@@ -44,27 +66,27 @@ public class User {
         this.password = password;
     }
 
-    public Timestamp getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
+    public ZonedDateTime getUpZonedDateTimedAt() {
+        return upZonedDateTimedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpZonedDateTimedAt(ZonedDateTime upZonedDateTimedAt) {
+        this.upZonedDateTimedAt = upZonedDateTimedAt;
     }
 
-    public Timestamp getDeletedAt() {
+    public ZonedDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Timestamp deletedAt) {
+    public void setDeletedAt(ZonedDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
 }
