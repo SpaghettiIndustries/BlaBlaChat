@@ -2,6 +2,7 @@ package pl.infobazasolution.blablachat.component.user.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -24,12 +25,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @NotBlank
+    @NotNull
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    @Column(name = "upZonedDateTimed_at")
-    private ZonedDateTime upZonedDateTimedAt;
+    @Column(name = "updated_at")
+    private ZonedDateTime updatedAt;
 
     @Column(name = "deleted_at")
     private ZonedDateTime deletedAt;
@@ -74,12 +75,12 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public ZonedDateTime getUpZonedDateTimedAt() {
-        return upZonedDateTimedAt;
+    public ZonedDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpZonedDateTimedAt(ZonedDateTime upZonedDateTimedAt) {
-        this.upZonedDateTimedAt = upZonedDateTimedAt;
+    public void setUpdatedAt(ZonedDateTime upZonedDateTimedAt) {
+        this.updatedAt = upZonedDateTimedAt;
     }
 
     public ZonedDateTime getDeletedAt() {

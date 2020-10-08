@@ -25,28 +25,4 @@ public class TestController {
     public String ping(){
         return LocalDateTime.now().toString();
     }
-
-    @GET
-    @Path("/hibernate/{id}")
-    public String hibernateTest(@PathParam("id") Integer id) {
-        Optional<User> user = userDao.selectUserById(id);
-
-        if(user.isPresent()) {
-            return user.get().getNick();
-        }
-
-        return "EMPTY";
-    }
-
-    @GET
-    @Path("/hibernate_all")
-    public String hibernateTestAll() {
-        ArrayList<String> users = new ArrayList<String>();
-
-        userDao.selectAllUsers().forEach(user -> {
-            users.add(user.getNick());
-        });
-
-        return users.toString();
-    }
 }
