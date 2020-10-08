@@ -3,6 +3,8 @@ package pl.infobazasolution.blablachat.component.user.controller;
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
 import pl.infobazasolution.blablachat.component.user.action.CreateUserAction;
 import pl.infobazasolution.blablachat.component.user.action.GetUserAction;
+import pl.infobazasolution.blablachat.component.user.action.LoginAction;
+import pl.infobazasolution.blablachat.component.user.dto.LoginUser;
 import pl.infobazasolution.blablachat.component.user.dto.NewUser;
 import pl.infobazasolution.blablachat.component.user.dto.UserDto;
 import pl.infobazasolution.blablachat.component.user.dto.UserFilter;
@@ -23,6 +25,9 @@ public class UserController {
     @Inject
     private CreateUserAction createUserAction;
 
+    @Inject
+    private LoginAction loginAction;
+
     @POST
     @Path("/get")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -37,5 +42,13 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public UserDto createUser(NewUser newUser) throws ValidationException {
         return createUserAction.execute(newUser);
+    }
+
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String login(LoginUser loginUser){
+        return loginAction.execute(loginUser);
     }
 }
