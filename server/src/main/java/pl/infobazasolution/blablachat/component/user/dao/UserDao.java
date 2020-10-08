@@ -30,7 +30,6 @@ public class UserDao extends AbstractDao<User, UserFilter> {
         }
     }
 
-    @Transactional
     public List<User> readAll() {
         try {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
