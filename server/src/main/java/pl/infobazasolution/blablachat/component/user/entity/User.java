@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "user_")
@@ -28,13 +28,13 @@ public class User {
 
     @NotBlank
     @Column(name = "created_at")
-    private Date createdAt;
+    private ZonedDateTime createdAt;
 
-    @Column(name = "updated_at")
-    private Date updatedAt;
+    @Column(name = "upZonedDateTimed_at")
+    private ZonedDateTime upZonedDateTimedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private ZonedDateTime deletedAt;
 
     public Integer getId() {
         return id;
@@ -68,27 +68,27 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public ZonedDateTime getUpZonedDateTimedAt() {
+        return upZonedDateTimedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpZonedDateTimedAt(ZonedDateTime upZonedDateTimedAt) {
+        this.upZonedDateTimedAt = upZonedDateTimedAt;
     }
 
-    public Date getDeletedAt() {
+    public ZonedDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Date deletedAt) {
+    public void setDeletedAt(ZonedDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
 }
