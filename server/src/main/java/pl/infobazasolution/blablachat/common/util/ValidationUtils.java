@@ -1,6 +1,9 @@
 package pl.infobazasolution.blablachat.common.util;
 
+import org.apache.commons.validator.EmailValidator;
+
 public class ValidationUtils {
+
     public static Boolean containsWhitespace(String str) {
         if (!(str != null && str.length() > 0)) {
             return false;
@@ -15,5 +18,11 @@ public class ValidationUtils {
         }
 
         return false;
+    }
+
+    public static Boolean isValidEmail(String email) {
+        EmailValidator validator = EmailValidator.getInstance();
+
+        return validator.isValid(email);
     }
 }
