@@ -1,17 +1,17 @@
 package pl.infobazasolution.blablachat.component.user.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "user_")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
 
@@ -26,15 +26,15 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @NotBlank
+    @NotNull
     @Column(name = "created_at")
-    private Date createdAt;
+    private ZonedDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private ZonedDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private ZonedDateTime deletedAt;
 
     public Integer getId() {
         return id;
@@ -68,27 +68,27 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Date getDeletedAt() {
+    public ZonedDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Date deletedAt) {
+    public void setDeletedAt(ZonedDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
 }
