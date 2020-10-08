@@ -30,7 +30,6 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
         String authorizationHeader = containerRequestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-//            logger.error("#### Invalid authorizationHeader: " + authorizationHeader);
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
             throw new NotAuthorizedException("Authorization header must be provided");
         }
@@ -41,7 +40,6 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
             Key key = keyGenerator.generateKey();
             Jwts.parser().setSigningKey(key).parseClaimsJws(token);
         } catch (Exception e) {
-//            logger.error("#### Invalid token: " + token);
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }
     }
