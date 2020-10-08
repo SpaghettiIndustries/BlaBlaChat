@@ -1,5 +1,6 @@
 package pl.infobazasolution.blablachat.component.user.action;
 
+import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.component.user.dto.LoginUser;
 import pl.infobazasolution.blablachat.component.user.service.LoginService;
 
@@ -12,7 +13,7 @@ public class LoginAction {
     @Inject
     private LoginService loginService;
 
-    public String execute(LoginUser loginUser){
+    public String execute(LoginUser loginUser) throws AuthenticationException {
         return loginService.login(loginUser);
     }
 }

@@ -1,5 +1,6 @@
 package pl.infobazasolution.blablachat.component.user.controller;
 
+import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
 import pl.infobazasolution.blablachat.component.user.action.CreateUserAction;
 import pl.infobazasolution.blablachat.component.user.action.GetUserAction;
@@ -48,7 +49,7 @@ public class UserController {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String login(LoginUser loginUser){
+    public String login(LoginUser loginUser) throws AuthenticationException {
         return loginAction.execute(loginUser);
     }
 }
