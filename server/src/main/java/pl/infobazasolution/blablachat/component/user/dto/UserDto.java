@@ -1,6 +1,5 @@
 package pl.infobazasolution.blablachat.component.user.dto;
 
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class UserDto {
@@ -8,7 +7,7 @@ public class UserDto {
     private String nick;
     private String email;
 
-    private ZonedDateTime createdAt;
+    private Date createdAt;
 
     public Integer getId() {
         return id;
@@ -34,11 +33,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(ZonedDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }
