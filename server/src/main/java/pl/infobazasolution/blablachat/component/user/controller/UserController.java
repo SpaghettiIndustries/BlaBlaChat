@@ -11,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/user")
 public class UserController {
 
     @Inject
@@ -24,5 +23,4 @@ public class UserController {
     public UserDto getUser(UserFilter filter) {
         return getUserAction.execute(filter);
     }
-
 }
