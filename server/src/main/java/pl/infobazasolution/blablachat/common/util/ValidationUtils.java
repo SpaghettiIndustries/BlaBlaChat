@@ -1,4 +1,4 @@
-package pl.infobazasolution.blablachat.common.exception.util;
+package pl.infobazasolution.blablachat.common.util;
 
 public class ValidationUtils {
     public static Boolean containsWhitespace(String str) {
