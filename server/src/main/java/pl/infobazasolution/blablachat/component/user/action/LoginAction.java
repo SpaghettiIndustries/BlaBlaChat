@@ -6,6 +6,9 @@ import pl.infobazasolution.blablachat.component.user.service.LoginService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 @RequestScoped
 public class LoginAction {
@@ -13,7 +16,11 @@ public class LoginAction {
     @Inject
     private LoginService loginService;
 
-    public String execute(LoginUser loginUser) throws AuthenticationException {
-        return loginService.login(loginUser);
+    public Response execute(LoginUser loginUser, UriInfo uriInfo) throws AuthenticationException {
+        String token = loginService.login(loginUser, uriInfo);
+
+        NewCookie cookie = new NewCookie("token", token);
+
+        return Response.ok("OK").cookie(cookie).build();
     }
 }

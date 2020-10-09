@@ -15,10 +15,16 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 @Path("/user")
 public class UserController {
+
+    @Context
+    private UriInfo uriInfo;
 
     @Inject
     private GetUserAction getUserAction;
@@ -49,7 +55,7 @@ public class UserController {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String login(LoginUser loginUser) throws AuthenticationException {
-        return loginAction.execute(loginUser);
+    public Response login(LoginUser loginUser) throws AuthenticationException {
+        return loginAction.execute(loginUser, uriInfo);
     }
 }

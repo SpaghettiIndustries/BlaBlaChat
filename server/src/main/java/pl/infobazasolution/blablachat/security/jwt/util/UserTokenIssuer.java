@@ -13,21 +13,18 @@ import java.util.Date;
 
 public class UserTokenIssuer implements TokenIssuer {
 
-    @Context
-    private UriInfo uriInfo;
-
     @Inject
     private KeyGenerator keyGenerator;
 
     @Override
-    public String issueToken(String subject, LocalDateTime expirationDate) {
+    public String issueToken(String subject, LocalDateTime expirationDate, UriInfo uriInfo) {
         Key key = keyGenerator.generateKey();
 
         String jwtToken = Jwts.builder()
                 .setSubject(subject)
                 .setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())
-                .setExpiration(toDate(expirationDate)) // LocalDateTime.now().plusDays(7L)
+                .setExpiration(toDate(expirationDate))
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
 
