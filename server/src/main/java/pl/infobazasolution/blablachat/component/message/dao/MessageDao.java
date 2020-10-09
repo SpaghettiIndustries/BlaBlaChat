@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -15,20 +16,19 @@ import java.util.Optional;
 
 public class MessageDao extends AbstractDao<Message, MessageFilter> {
 
-    @Override
-    protected Optional<Message> create(Message message) {
-        try{
+    @Transactional
+    public Optional<Message> create(Message message) {
+        try {
             entityManager.persist(message);
 
             return Optional.of(message);
         }
-        catch (Exception e){
+        catch (Exception e) {
             return Optional.empty();
         }
     }
 
-    @Override
-    protected List<Message> readAll() {
+    public List<Message> readAll() {
         try {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Message> criteriaQuery = criteriaBuilder.createQuery(Message.class);
@@ -40,23 +40,21 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
             TypedQuery<Message> messageTypedQuery = entityManager.createQuery(criteriaQuery);
 
             return messageTypedQuery.getResultList();
-        }catch (Exception e){
+        } catch (Exception e) {
             return Collections.emptyList();
         }
     }
 
-    @Override
-    protected Optional<Message> findById(Integer id) {
-        try{
-            return Optional.ofNullable(entityManager.find(Message.class,id));
-        }catch (Exception e){
+    public Optional<Message> findById(Integer id) {
+        try {
+            return Optional.ofNullable(entityManager.find(Message.class, id));
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
 
-    @Override
-    protected Optional<Message> find(MessageFilter filter) {
-        try{
+    public Optional<Message> find(MessageFilter filter) {
+        try {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Message> criteriaQuery = criteriaBuilder.createQuery(Message.class);
 
@@ -64,57 +62,58 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
 
             criteriaQuery.select(messageRoot);
 
-            if(Objects.nonNull(filter.getId())){
-                criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("id"),filter.getId()));
-            }
-
-            if(Objects.nonNull(filter.getSenderId())){
-                criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("sender_id"),filter.getSenderId()));
-            }
-
-            if(Objects.nonNull(filter.getReceiverId())){
-                criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("receiver_id"),filter.getReceiverId()));
+            if (Objects.nonNull(filter.getId())) {
+                criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("id"), filter.getId()));
+            } else {
+                return Optional.empty();
             }
 
             TypedQuery<Message> messageTypedQuery = entityManager.createQuery(criteriaQuery);
 
             return Optional.of(messageTypedQuery.getSingleResult());
-        }catch(Exception e){
+        } catch(Exception e) {
             return Optional.empty();
         }
     }
 
-    @Override
-    protected Optional<Message> update(Integer id, Message messageToUpdate) {
-        try{
-            if(entityManager.find(Message.class,id) != null){
+    public List<Message> findRecent(MessageFilter filter) {
+
+    }
+
+    @Transactional
+    public Optional<Message> update(Integer id, Message messageToUpdate) {
+        try {
+            if (entityManager.find(Message.class, id) != null) {
                 Message updatedMessage = entityManager.merge(messageToUpdate);
 
                 return Optional.of(updatedMessage);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return Optional.empty();
         }
+
         return Optional.empty();
     }
 
-    @Override
-    protected Boolean delete(Integer id) {
-        try{
+    @Transactional
+    public Boolean delete(Integer id) {
+        try {
             Optional<Message> messageToDelete = findById(id);
 
-            if(messageToDelete.isPresent()){
+            if (messageToDelete.isPresent()) {
                 entityManager.remove(messageToDelete.get());
 
                 return true;
             }
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            return false;
         }
+
         return false;
     }
-    protected List<Message> findAllUserMessages(MessageFilter messageFilter){
-        try{
+
+    /*protected List<Message> findAllUserMessages(MessageFilter messageFilter) {
+        try {
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Message.class);
 
@@ -129,7 +128,7 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
         }catch (Exception e){
             return Collections.emptyList();
         }
-    }
+    }*/
     /*protected Optional<Message> findFew(MessageFilter filter,Integer number){
         try{
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();

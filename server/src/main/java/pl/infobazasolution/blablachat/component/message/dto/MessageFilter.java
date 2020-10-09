@@ -4,31 +4,22 @@ import pl.infobazasolution.blablachat.common.Filter;
 
 public class MessageFilter extends Filter {
 
-    private Integer senderId;
-    private Integer receiverId;
+    private Integer topicId;
     private Integer numberOfLastMessages;
 
-    public void setSenderId(Integer senderId) {
-        this.senderId = senderId;
+    public Integer getTopicId() {
+        return topicId;
     }
 
-    public void setReceiverId(Integer receiverId) {
-        this.receiverId = receiverId;
-    }
-
-    public void setNumberOfLastMessages(Integer numberOfLastMessages) {
-        this.numberOfLastMessages = numberOfLastMessages;
-    }
-
-    public Integer getSenderId() {
-        return senderId;
-    }
-
-    public Integer getReceiverId() {
-        return receiverId;
+    public void setTopicId(Integer topicId) {
+        this.topicId = topicId;
     }
 
     public Integer getNumberOfLastMessages() {
         return numberOfLastMessages;
+    }
+
+    public void setNumberOfLastMessages(Integer numberOfLastMessages) {
+        this.numberOfLastMessages = numberOfLastMessages;
     }
 }

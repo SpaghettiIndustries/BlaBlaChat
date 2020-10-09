@@ -1,5 +1,6 @@
 package pl.infobazasolution.blablachat.component.message.entity;
 
+import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.persistence.*;
@@ -17,12 +18,9 @@ public class Message {
     private Integer id;
 
     @NotNull
-    @Column(name = "sender_id")
-    private User sender;
-
-    @NotNull
-    @Column(name = "receiver_id")
-    private User receiver;
+    @JoinColumn(name = "topic_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Topic topic;
 
     @NotBlank
     @Column(name = "content")
