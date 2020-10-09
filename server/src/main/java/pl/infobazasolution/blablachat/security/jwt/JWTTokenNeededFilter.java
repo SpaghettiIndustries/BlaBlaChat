@@ -38,12 +38,14 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
         String token = authorizationHeader.substring("Bearer".length()).trim();*/
 
-        String token = containerRequestContext.getCookies().get("token").getValue();
+        Cookie tokenCookie = containerRequestContext.getCookies().get("token");
 
-        if (token == null)
+        if (tokenCookie == null) {
             containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+        }
 
         try {
+            String token = tokenCookie.getValue();
             Key key = keyGenerator.generateKey();
             Jwts.parser().setSigningKey(key).parseClaimsJws(token);
         } catch (Exception e) {
