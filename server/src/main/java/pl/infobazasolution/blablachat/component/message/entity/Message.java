@@ -47,20 +47,12 @@ public class Message {
         this.id = id;
     }
 
-    public User getSender() {
-        return sender;
+    public Topic getTopic() {
+        return topic;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public String getContent() {

@@ -1,13 +1,14 @@
 package pl.infobazasolution.blablachat.component.message.dto;
 
+import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import java.util.Date;
 
 public class MessageDto {
+
     private Integer id;
-    private User sender;
-    private User receiver;
+    private Topic topic;
     private String content;
 
     private Date createdAt;
@@ -23,20 +24,12 @@ public class MessageDto {
         this.id = id;
     }
 
-    public User getSender() {
-        return sender;
+    public Topic getTopic() {
+        return topic;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public String getContent() {

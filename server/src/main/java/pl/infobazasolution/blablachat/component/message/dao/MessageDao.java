@@ -77,7 +77,7 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
     }
 
     public List<Message> findRecent(MessageFilter filter) {
-
+        return null;
     }
 
     @Transactional
