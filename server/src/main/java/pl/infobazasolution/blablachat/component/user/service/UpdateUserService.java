@@ -17,39 +17,41 @@ public class UpdateUserService {
     private UserDao userDao;
 
     public UserDto update(UpdateUser updateUser) {
-    try{
-        User newUserEntity = new User();
+        try {
+            User newUserEntity = new User();
 
-        Optional<User> optional = userDao.findById(updateUser.getId());
-        User user = optional.get();
+            Optional<User> optional = userDao.findById(updateUser.getId());
+            User user = optional.get();
 
-        if(updateUser.getNick().trim().isEmpty())
-            updateUser.setNick(user.getNick());
-        if(updateUser.getEmail().trim().isEmpty())
-            updateUser.setEmail(user.getEmail());
-        if(updateUser.getPassword().trim().isEmpty())
-            updateUser.setPassword(user.getPassword());
+            if (updateUser.getNick().trim().isEmpty())
+                updateUser.setNick(user.getNick());
 
-        newUserEntity.setNick(updateUser.getNick());
-        newUserEntity.setEmail(updateUser.getEmail());
-        newUserEntity.setPassword(updateUser.getPassword());
+            if (updateUser.getEmail().trim().isEmpty())
+                updateUser.setEmail(user.getEmail());
 
-        newUserEntity.setUpdatedAt(ZonedDateTime.now());
-        newUserEntity.setCreatedAt(user.getCreatedAt());
+            if (updateUser.getPassword().trim().isEmpty())
+                updateUser.setPassword(user.getPassword());
 
-        newUserEntity.setId(user.getId());
+            newUserEntity.setNick(updateUser.getNick());
+            newUserEntity.setEmail(updateUser.getEmail());
+            newUserEntity.setPassword(updateUser.getPassword());
 
-        userDao.update(updateUser.getId(),newUserEntity);
+            newUserEntity.setUpdatedAt(ZonedDateTime.now());
+            newUserEntity.setCreatedAt(user.getCreatedAt());
 
-        UserDto userDto = new UserDto();
+            newUserEntity.setId(user.getId());
 
-        userDto.setId(newUserEntity.getId());
-        userDto.setNick(updateUser.getNick());
-        userDto.setEmail(updateUser.getEmail());
+            userDao.update(updateUser.getId(),newUserEntity);
 
-        return userDto;
-    } catch (Exception e) {
-        return null;
-    }
+            UserDto userDto = new UserDto();
+
+            userDto.setId(newUserEntity.getId());
+            userDto.setNick(updateUser.getNick());
+            userDto.setEmail(updateUser.getEmail());
+
+            return userDto;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
