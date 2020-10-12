@@ -38,6 +38,7 @@ public class UpdateUserService {
         newUserEntity.setCreatedAt(user.getCreatedAt());
 
         newUserEntity.setId(user.getId());
+
         userDao.update(updateUser.getId(),newUserEntity);
 
         UserDto userDto = new UserDto();

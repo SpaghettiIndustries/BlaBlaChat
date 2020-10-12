@@ -43,7 +43,7 @@ public class UpdateUserValidator {
 
             if (!(updateUser.getEmail().trim().isEmpty())){
 
-                if (!Objects.nonNull(updateUser.getEmail())) //&& !ValidationUtils.isValidEmail(updateUser.getEmail()))
+                if (!Objects.nonNull(updateUser.getEmail()) && !ValidationUtils.isValidEmail(updateUser.getEmail()))
                     throw new ValidationException("E-mail nie jest prawidłowy");
 
             }
