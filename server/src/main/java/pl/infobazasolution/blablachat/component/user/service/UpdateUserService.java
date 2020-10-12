@@ -9,6 +9,7 @@ import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 public class UpdateUserService {
@@ -23,18 +24,18 @@ public class UpdateUserService {
             Optional<User> optional = userDao.findById(updateUser.getId());
             User user = optional.get();
 
-            if (updateUser.getNick().trim().isEmpty())
+            if (!Objects.nonNull(updateUser.getNick()))
                 updateUser.setNick(user.getNick());
 
-            if (updateUser.getEmail().trim().isEmpty())
+            if (!Objects.nonNull(updateUser.getEmail()))
                 updateUser.setEmail(user.getEmail());
 
-            if (updateUser.getPassword().trim().isEmpty())
+            if (!Objects.nonNull(updateUser.getPassword()))
                 updateUser.setPassword(user.getPassword());
 
             newUserEntity.setNick(updateUser.getNick());
             newUserEntity.setEmail(updateUser.getEmail());
-            newUserEntity.setPassword(updateUser.getPassword());
+            newUserEntity.setPassword(PasswordUtils.digestPassword(updateUser.getPassword()));
 
             newUserEntity.setUpdatedAt(ZonedDateTime.now());
             newUserEntity.setCreatedAt(user.getCreatedAt());

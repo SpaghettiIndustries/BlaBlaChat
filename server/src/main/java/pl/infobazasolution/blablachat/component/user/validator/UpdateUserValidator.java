@@ -15,48 +15,72 @@ public class UpdateUserValidator {
     @Inject
     private UserDao userDao;
 
-    public Boolean validate(UpdateUser updateUser) throws ValidationException{
+    public Boolean validate(UpdateUser updateUser) throws ValidationException {
 
         List<User> existingUsers = userDao.readAll();
+        Boolean foundId = false;
 
-        if (!(updateUser.getNick().trim().isEmpty())
-                && !(updateUser.getPassword().trim().isEmpty())
-                && !(updateUser.getEmail().trim().isEmpty())) {
+        for (User existingUser : existingUsers) {
 
-            if (!(updateUser.getNick().trim().isEmpty())){
+            if (existingUser.getId().equals(updateUser.getId()))
+                foundId = true;
 
-                if (ValidationUtils.containsWhitespace(updateUser.getNick()))
-                    throw new ValidationException("Nick nie może mieć spacji przed lub po");
+        }
+        if (foundId) {
+            if (Objects.nonNull(updateUser.getNick())
+                    || Objects.nonNull(updateUser.getPassword())
+                    || Objects.nonNull(updateUser.getEmail())) {
 
-                if (updateUser.getNick().length() < 5)
-                    throw new ValidationException("Nick nie może mieć mniej niż 5 znaków");
+                if (Objects.nonNull(updateUser.getNick())) {
 
-                if (updateUser.getNick().length() > 25)
-                    throw new ValidationException("Nick nie może mieć więcej niż 25 znaków");
+                    if (!(updateUser.getNick().trim().isEmpty())) {
 
-                for (User existingUser : existingUsers) {
-                    if (existingUser.getNick().equals(updateUser.getNick()))
-                        throw new ValidationException("Podany nick już istnieje");
+                        if (ValidationUtils.containsWhitespace(updateUser.getNick()))
+                            throw new ValidationException("Nick nie może mieć spacji przed lub po");
+
+                        if (updateUser.getNick().length() < 5)
+                            throw new ValidationException("Nick nie może mieć mniej niż 5 znaków");
+
+                        if (updateUser.getNick().length() > 25)
+                            throw new ValidationException("Nick nie może mieć więcej niż 25 znaków");
+
+                        for (User existingUser : existingUsers) {
+                            if (existingUser.getNick().equals(updateUser.getNick()))
+                                throw new ValidationException("Podany nick już istnieje");
+                        }
+
+                    } else {
+                        throw new ValidationException("Nick nie może być pusty!");
+                    }
+                }
+                if (Objects.nonNull(updateUser.getEmail())) {
+                    if (!(updateUser.getEmail().trim().isEmpty())) {
+
+                        if (!Objects.nonNull(updateUser.getEmail()) && !ValidationUtils.isValidEmail(updateUser.getEmail()))
+                            throw new ValidationException("E-mail nie jest prawidłowy");
+
+
+                    } else {
+                        throw new ValidationException("Email nie może być pusty!");
+                    }
+
+                }
+                if (Objects.nonNull(updateUser.getPassword())) {
+                    if (!(updateUser.getPassword().trim().isEmpty())) {
+
+                        if (ValidationUtils.containsWhitespace(updateUser.getPassword()))
+                            throw new ValidationException("Hasło nie może zawierać spacji");
+
+                    } else {
+                        throw new ValidationException("Hasło nie może być puste!");
+                    }
                 }
 
-            }
-
-            if (!(updateUser.getEmail().trim().isEmpty())){
-
-                if (!Objects.nonNull(updateUser.getEmail()) && !ValidationUtils.isValidEmail(updateUser.getEmail()))
-                    throw new ValidationException("E-mail nie jest prawidłowy");
+                return true;
 
             }
-
-            if (!(updateUser.getPassword().trim().isEmpty())) {
-
-                if (ValidationUtils.containsWhitespace(updateUser.getPassword()))
-                    throw new ValidationException("Hasło nie może zawierać spacji");
-
-            }
-            return true;
+            throw new ValidationException("Nie podano żadnych wartości");
         }
-        throw new ValidationException("Nie podano żadnych wartości");
+        throw new ValidationException("Nie znaleziono użytkownika o podanym id");
     }
-
 }
