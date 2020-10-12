@@ -68,14 +68,6 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
                 criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("id"),filter.getId()));
             }
 
-            if(Objects.nonNull(filter.getSenderId())){
-                criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("sender_id"),filter.getSenderId()));
-            }
-
-            if(Objects.nonNull(filter.getReceiverId())){
-                criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("receiver_id"),filter.getReceiverId()));
-            }
-
             TypedQuery<Message> messageTypedQuery = entityManager.createQuery(criteriaQuery);
 
             return Optional.of(messageTypedQuery.getSingleResult());

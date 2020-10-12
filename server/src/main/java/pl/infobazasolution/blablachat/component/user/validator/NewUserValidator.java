@@ -36,6 +36,9 @@ public class NewUserValidator {
         if (newUser.getPassword().trim().isEmpty())
             throw new ValidationException("Hasło nie może być puste");
 
+        if (newUser.getPassword().length() < 8)
+            throw new ValidationException("Hasło nie może być krótsze niż 8 znaków");
+
         if (ValidationUtils.containsWhitespace(newUser.getPassword()))
             throw new ValidationException("Hasło nie może zawierać spacji");
 

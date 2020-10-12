@@ -18,11 +18,11 @@ public class Message {
 
     @NotNull
     @Column(name = "sender_id")
-    private User sender;
+    private Integer sender;
 
     @NotNull
     @Column(name = "receiver_id")
-    private User receiver;
+    private Integer receiver;
 
     @NotBlank
     @Column(name = "content")
@@ -49,19 +49,19 @@ public class Message {
         this.id = id;
     }
 
-    public User getSender() {
+    public Integer getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(Integer sender) {
         this.sender = sender;
     }
 
-    public User getReceiver() {
+    public Integer getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(User receiver) {
+    public void setReceiver(Integer receiver) {
         this.receiver = receiver;
     }
 
