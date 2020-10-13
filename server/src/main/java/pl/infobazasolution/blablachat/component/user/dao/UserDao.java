@@ -66,9 +66,7 @@ public class UserDao extends AbstractDao<User, UserFilter> {
 
             if (Objects.nonNull(filter.getId())) {
                 criteriaQuery.where(criteriaBuilder.equal(userRoot.get("id"), filter.getId()));
-            }
-
-            if (Objects.nonNull(filter.getNick())) {
+            } else if (Objects.nonNull(filter.getNick())) {
                 criteriaQuery.where(criteriaBuilder.equal(userRoot.get("nick"), filter.getNick()));
             }
 

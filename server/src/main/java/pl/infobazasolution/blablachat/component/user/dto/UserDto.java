@@ -1,12 +1,14 @@
 package pl.infobazasolution.blablachat.component.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class UserDto {
     private Integer id;
     private String nick;
     private String email;
-
     private ZonedDateTime createdAt;
 
     public Integer getId() {

@@ -1,18 +1,42 @@
 package pl.infobazasolution.blablachat.component.message.entity;
 
+import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Entity
+@Table(name = "message")
 public class Message {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "message_generator")
+    @SequenceGenerator(name = "message_generator", sequenceName = "message_seq", allocationSize = 1)
+    @Column(name = "id")
     private Integer id;
-    private User sender;
-    private User receiver;
+
+    @NotNull
+    @JoinColumn(name = "topic_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Topic topic;
+
+    @NotBlank
+    @Column(name = "content")
     private String content;
 
+    @NotNull
+    @Column(name = "created_at")
     private Date createdAt;
+
+    @Column(name = "updated_at")
     private Date updatedAt;
+
+    @Column(name = "deleted_at")
     private Date deletedAt;
+
+    @Column(name = "read_at")
     private Date readAt;
 
     public Integer getId() {
@@ -23,20 +47,12 @@ public class Message {
         this.id = id;
     }
 
-    public User getSender() {
-        return sender;
+    public Topic getTopic() {
+        return topic;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public String getContent() {

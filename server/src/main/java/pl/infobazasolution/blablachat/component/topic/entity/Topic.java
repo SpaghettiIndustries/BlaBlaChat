@@ -1,29 +1,30 @@
-package pl.infobazasolution.blablachat.component.user.entity;
+package pl.infobazasolution.blablachat.component.topic.entity;
+
+import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "user_")
-public class User {
+@Table(name = "topic")
+public class Topic {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
-    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "topic_generator")
+    @SequenceGenerator(name = "topic_generator", sequenceName = "topic_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
 
-    @NotBlank
-    @Column(name = "nick")
-    private String nick;
+    @NotNull
+    @JoinColumn(name = "first_user_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private User firstUser;
 
-    @Column(name = "email")
-    private String email;
-
-    @NotBlank
-    @Column(name = "password")
-    private String password;
+    @NotNull
+    @JoinColumn(name = "second_user_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private User secondUser;
 
     @NotNull
     @Column(name = "created_at")
@@ -43,28 +44,20 @@ public class User {
         this.id = id;
     }
 
-    public String getNick() {
-        return nick;
+    public User getFirstUser() {
+        return firstUser;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setFirstUser(User firstUser) {
+        this.firstUser = firstUser;
     }
 
-    public String getEmail() {
-        return email;
+    public User getSecondUser() {
+        return secondUser;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSecondUser(User secondUser) {
+        this.secondUser = secondUser;
     }
 
     public ZonedDateTime getCreatedAt() {
