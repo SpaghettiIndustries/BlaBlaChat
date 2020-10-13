@@ -1,31 +1,30 @@
-package pl.infobazasolution.blablachat.component.message.entity;
+package pl.infobazasolution.blablachat.component.topic.entity;
 
-import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Entity
-@Table(name = "message")
-public class Message {
+@Table(name = "topic")
+public class Topic {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "message_generator")
-    @SequenceGenerator(name = "message_generator", sequenceName = "message_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "topic_generator")
+    @SequenceGenerator(name = "topic_generator", sequenceName = "topic_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
 
     @NotNull
-    @JoinColumn(name = "topic_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "first_user_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Topic topic;
+    private User firstUser;
 
-    @NotBlank
-    @Column(name = "content")
-    private String content;
+    @NotNull
+    @JoinColumn(name = "second_user_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private User secondUser;
 
     @NotNull
     @Column(name = "created_at")
@@ -37,9 +36,6 @@ public class Message {
     @Column(name = "deleted_at")
     private ZonedDateTime deletedAt;
 
-    @Column(name = "read_at")
-    private ZonedDateTime readAt;
-
     public Integer getId() {
         return id;
     }
@@ -48,20 +44,20 @@ public class Message {
         this.id = id;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public User getFirstUser() {
+        return firstUser;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setFirstUser(User firstUser) {
+        this.firstUser = firstUser;
     }
 
-    public String getContent() {
-        return content;
+    public User getSecondUser() {
+        return secondUser;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setSecondUser(User secondUser) {
+        this.secondUser = secondUser;
     }
 
     public ZonedDateTime getCreatedAt() {
@@ -86,13 +82,5 @@ public class Message {
 
     public void setDeletedAt(ZonedDateTime deletedAt) {
         this.deletedAt = deletedAt;
-    }
-
-    public ZonedDateTime getReadAt() {
-        return readAt;
-    }
-
-    public void setReadAt(ZonedDateTime readAt) {
-        this.readAt = readAt;
     }
 }
