@@ -2,10 +2,7 @@ package pl.infobazasolution.blablachat.component.user.controller;
 
 import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
-import pl.infobazasolution.blablachat.component.user.action.CreateUserAction;
-import pl.infobazasolution.blablachat.component.user.action.GetUserAction;
-import pl.infobazasolution.blablachat.component.user.action.LoginAction;
-import pl.infobazasolution.blablachat.component.user.action.UpdateUserAction;
+import pl.infobazasolution.blablachat.component.user.action.*;
 import pl.infobazasolution.blablachat.component.user.dto.*;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 
@@ -37,6 +34,9 @@ public class UserController {
     @Inject
     private UpdateUserAction updateUserAction;
 
+    @Inject
+    private DeleteUserAction deleteUserAction;
+
     @POST
     @Path("/get")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -57,7 +57,7 @@ public class UserController {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response login(LoginUser loginUser) throws AuthenticationException {
+    public Response login(LoginUser loginUser) throws AuthenticationException, ValidationException {
         return loginAction.execute(loginUser, uriInfo);
     }
 
@@ -67,6 +67,14 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public UserDto update(UpdateUser updateUser) throws ValidationException {
         return updateUserAction.execute(updateUser);
+    }
+
+    @POST
+    @Path("/delete")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Boolean delete(DeleteUser deleteUser) throws ValidationException {
+        return deleteUserAction.execute(deleteUser);
     }
 
 }

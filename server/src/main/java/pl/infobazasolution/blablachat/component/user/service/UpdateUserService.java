@@ -19,7 +19,7 @@ public class UpdateUserService {
 
     public UserDto update(UpdateUser updateUser) {
         try {
-            User newUserEntity = new User();
+            User updateUserEntity = new User();
 
             Optional<User> optional = userDao.findById(updateUser.getId());
             User user = optional.get();
@@ -33,20 +33,20 @@ public class UpdateUserService {
             if (!Objects.nonNull(updateUser.getPassword()))
                 updateUser.setPassword(user.getPassword());
 
-            newUserEntity.setNick(updateUser.getNick());
-            newUserEntity.setEmail(updateUser.getEmail());
-            newUserEntity.setPassword(PasswordUtils.digestPassword(updateUser.getPassword()));
+            updateUserEntity.setNick(updateUser.getNick());
+            updateUserEntity.setEmail(updateUser.getEmail());
+            updateUserEntity.setPassword(PasswordUtils.digestPassword(updateUser.getPassword()));
 
-            newUserEntity.setUpdatedAt(ZonedDateTime.now());
-            newUserEntity.setCreatedAt(user.getCreatedAt());
+            updateUserEntity.setUpdatedAt(ZonedDateTime.now());
+            updateUserEntity.setCreatedAt(user.getCreatedAt());
 
-            newUserEntity.setId(user.getId());
+            updateUserEntity.setId(user.getId());
 
-            userDao.update(updateUser.getId(),newUserEntity);
+            userDao.update(updateUser.getId(),updateUserEntity);
 
             UserDto userDto = new UserDto();
 
-            userDto.setId(newUserEntity.getId());
+            userDto.setId(updateUserEntity.getId());
             userDto.setNick(updateUser.getNick());
             userDto.setEmail(updateUser.getEmail());
 
