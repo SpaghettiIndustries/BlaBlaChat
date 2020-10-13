@@ -33,30 +33,6 @@ public class Topic {
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
 
-    public ZonedDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(ZonedDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public ZonedDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public ZonedDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(ZonedDateTime deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
     @Column(name = "deleted_at")
     private ZonedDateTime deletedAt;
 
@@ -82,5 +58,29 @@ public class Topic {
 
     public void setSecondUser(User secondUser) {
         this.secondUser = secondUser;
+    }
+
+    public ZonedDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(ZonedDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public ZonedDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public ZonedDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(ZonedDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

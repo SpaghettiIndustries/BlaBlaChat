@@ -64,11 +64,22 @@ public class TopicDao extends AbstractDao<Topic, TopicFilter> {
             if (Objects.nonNull(filter.getId())) {
                 criteriaQuery.where(criteriaBuilder.equal(topicRoot.get("id"), filter.getId()));
             } else if (Objects.nonNull(filter.getFirstUserId()) && Objects.nonNull(filter.getSecondUserId())) {
-                criteriaQuery.where(criteriaBuilder.equal(topicRoot.get("first_user_id"), filter.getFirstUserId()));
-                criteriaQuery.where(criteriaBuilder.equal(topicRoot.get("second_user_id"), filter.getSecondUserId()));
+                criteriaQuery.where(criteriaBuilder.and(
+                    criteriaBuilder.equal(topicRoot.get("firstUser"), filter.getFirstUserId()),
+                    criteriaBuilder.equal(topicRoot.get("secondUser"), filter.getSecondUserId())
+                ));
             }
 
             TypedQuery<Topic> topicTypedQuery = entityManager.createQuery(criteriaQuery);
+
+            if (topicTypedQuery.getResultList().isEmpty()) {
+                criteriaQuery.where(criteriaBuilder.and(
+                        criteriaBuilder.equal(topicRoot.get("firstUser"), filter.getSecondUserId()),
+                        criteriaBuilder.equal(topicRoot.get("secondUser"), filter.getFirstUserId())
+                ));
+
+                topicTypedQuery = entityManager.createQuery(criteriaQuery);
+            }
 
             return Optional.of(topicTypedQuery.getSingleResult());
         } catch (Exception e) {
