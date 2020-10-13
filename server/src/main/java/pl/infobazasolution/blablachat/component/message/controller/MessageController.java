@@ -2,6 +2,9 @@ package pl.infobazasolution.blablachat.component.message.controller;
 
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
 import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
+import pl.infobazasolution.blablachat.component.message.action.GetMessagesAction;
+import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
+import pl.infobazasolution.blablachat.component.message.dto.MessageFilter;
 import pl.infobazasolution.blablachat.component.message.dto.NewMessage;
 import pl.infobazasolution.blablachat.component.message.action.SendMessageAction;
 
