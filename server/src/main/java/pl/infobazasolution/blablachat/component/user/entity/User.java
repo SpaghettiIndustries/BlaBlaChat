@@ -79,8 +79,8 @@ public class User {
         return updatedAt;
     }
 
-    public void setUpdatedAt(ZonedDateTime upZonedDateTimedAt) {
-        this.updatedAt = upZonedDateTimedAt;
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public ZonedDateTime getDeletedAt() {
