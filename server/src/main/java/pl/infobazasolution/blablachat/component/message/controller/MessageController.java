@@ -18,11 +18,22 @@ public class MessageController {
     @Inject
     private SendMessageAction sendMessageAction;
 
+    @Inject
+    private GetMessagesAction getMessagesAction;
+
     @POST
     @Path("/send")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public MessageDto sendMessage(NewMessage newMessage) throws ValidationException {
         return sendMessageAction.execute(newMessage);
+    }
+
+    @POST
+    @Path("/get")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MessageDto> getMessages(MessageFilter filter) throws ValidationException {
+        return getMessagesAction.execute(filter);
     }
 }
