@@ -6,6 +6,7 @@ import pl.infobazasolution.blablachat.component.user.entity.User;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Entity
@@ -28,16 +29,16 @@ public class Message {
 
     @NotNull
     @Column(name = "created_at")
-    private Date createdAt;
+    private ZonedDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private ZonedDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private ZonedDateTime deletedAt;
 
     @Column(name = "read_at")
-    private Date readAt;
+    private ZonedDateTime readAt;
 
     public Integer getId() {
         return id;
@@ -63,35 +64,35 @@ public class Message {
         this.content = content;
     }
 
-    public Date getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Date getDeletedAt() {
+    public ZonedDateTime getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Date deletedAt) {
+    public void setDeletedAt(ZonedDateTime deletedAt) {
         this.deletedAt = deletedAt;
     }
 
-    public Date getReadAt() {
+    public ZonedDateTime getReadAt() {
         return readAt;
     }
 
-    public void setReadAt(Date readAt) {
+    public void setReadAt(ZonedDateTime readAt) {
         this.readAt = readAt;
     }
 }

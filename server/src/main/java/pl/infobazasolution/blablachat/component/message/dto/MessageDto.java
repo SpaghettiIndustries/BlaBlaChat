@@ -1,20 +1,22 @@
 package pl.infobazasolution.blablachat.component.message.dto;
 
+import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 public class MessageDto {
 
     private Integer id;
-    private Topic topic;
+    private Integer topicId;
     private String content;
 
-    private Date createdAt;
-    private Date updatedAt;
-    private Date deletedAt;
-    private Date readAt;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updatedAt;
+    private ZonedDateTime readAt;
+    private ZonedDateTime deletedAt;
 
     public Integer getId() {
         return id;
@@ -24,12 +26,12 @@ public class MessageDto {
         this.id = id;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public Integer getTopicId() {
+        return topicId;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setTopicId(Integer topicId) {
+        this.topicId = topicId;
     }
 
     public String getContent() {
@@ -40,35 +42,35 @@ public class MessageDto {
         this.content = content;
     }
 
-    public Date getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Date getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public Date getReadAt() {
+    public ZonedDateTime getReadAt() {
         return readAt;
     }
 
-    public void setReadAt(Date readAt) {
+    public void setReadAt(ZonedDateTime readAt) {
         this.readAt = readAt;
+    }
+
+    public ZonedDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(ZonedDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }
