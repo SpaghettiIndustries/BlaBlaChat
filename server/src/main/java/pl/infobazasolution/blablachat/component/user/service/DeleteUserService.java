@@ -7,6 +7,7 @@ import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.inject.Inject;
 import javax.validation.constraints.Null;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ public class DeleteUserService {
 
             deleteUserEntity.setEmail(null);
             deleteUserEntity.setNick("Usunięto");
+            deleteUserEntity.setDeletedAt(ZonedDateTime.now());
 
             userDao.update(deleteUserEntity.getId(),deleteUserEntity);
 
