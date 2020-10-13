@@ -5,10 +5,9 @@ import pl.infobazasolution.blablachat.common.exception.ValidationException;
 import pl.infobazasolution.blablachat.component.user.action.CreateUserAction;
 import pl.infobazasolution.blablachat.component.user.action.GetUserAction;
 import pl.infobazasolution.blablachat.component.user.action.LoginAction;
-import pl.infobazasolution.blablachat.component.user.dto.LoginUser;
-import pl.infobazasolution.blablachat.component.user.dto.NewUser;
-import pl.infobazasolution.blablachat.component.user.dto.UserDto;
-import pl.infobazasolution.blablachat.component.user.dto.UserFilter;
+import pl.infobazasolution.blablachat.component.user.action.UpdateUserAction;
+import pl.infobazasolution.blablachat.component.user.dto.*;
+import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -35,6 +34,9 @@ public class UserController {
     @Inject
     private LoginAction loginAction;
 
+    @Inject
+    private UpdateUserAction updateUserAction;
+
     @POST
     @Path("/get")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -58,4 +60,13 @@ public class UserController {
     public Response login(LoginUser loginUser) throws AuthenticationException {
         return loginAction.execute(loginUser, uriInfo);
     }
+
+    @POST
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public UserDto update(UpdateUser updateUser) throws ValidationException {
+        return updateUserAction.execute(updateUser);
+    }
+
 }
