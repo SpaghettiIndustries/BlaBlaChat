@@ -77,7 +77,35 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
     }
 
     public List<Message> findRecent(MessageFilter filter) {
-        return null;
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Message> criteriaQuery = criteriaBuilder.createQuery(Message.class);
+
+            Root<Message> messageRoot = criteriaQuery.from(Message.class);
+
+            criteriaQuery.select(messageRoot);
+
+            if (Objects.nonNull(filter.getTopicId())) {
+                if (Objects.nonNull(filter.getStartIndex())) {
+                    criteriaQuery.where(criteriaBuilder.and(
+                            criteriaBuilder.equal(messageRoot.get("topic"), filter.getTopicId()),
+                            criteriaBuilder.lt(messageRoot.get("id"), filter.getStartIndex())
+                    ));
+                } else {
+                    criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("topic"), filter.getTopicId()));
+                }
+
+                criteriaQuery.orderBy(criteriaBuilder.desc(messageRoot.get("createdAt")));
+            } else {
+                return Collections.emptyList();
+            }
+
+            TypedQuery<Message> messageTypedQuery = entityManager.createQuery(criteriaQuery);
+
+            return messageTypedQuery.getResultList();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
     }
 
     @Transactional

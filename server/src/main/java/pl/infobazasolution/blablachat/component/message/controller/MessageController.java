@@ -11,6 +11,7 @@ import pl.infobazasolution.blablachat.component.message.action.SendMessageAction
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/message")
 public class MessageController {

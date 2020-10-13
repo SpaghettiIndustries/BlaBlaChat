@@ -5,7 +5,8 @@ import pl.infobazasolution.blablachat.common.Filter;
 public class MessageFilter extends Filter {
 
     private Integer topicId;
-    private Integer numberOfLastMessages;
+    private Integer numberOfMessages;
+    private Integer startIndex;
 
     public Integer getTopicId() {
         return topicId;
@@ -15,11 +16,19 @@ public class MessageFilter extends Filter {
         this.topicId = topicId;
     }
 
-    public Integer getNumberOfLastMessages() {
-        return numberOfLastMessages;
+    public Integer getNumberOfMessages() {
+        return numberOfMessages;
     }
 
-    public void setNumberOfLastMessages(Integer numberOfLastMessages) {
-        this.numberOfLastMessages = numberOfLastMessages;
+    public void setNumberOfMessages(Integer numberOfMessages) {
+        this.numberOfMessages = numberOfMessages;
+    }
+
+    public Integer getStartIndex() {
+        return startIndex;
+    }
+
+    public void setStartIndex(Integer startIndex) {
+        this.startIndex = startIndex;
     }
 }
