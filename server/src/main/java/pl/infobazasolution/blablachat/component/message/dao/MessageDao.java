@@ -139,36 +139,4 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
 
         return false;
     }
-
-    /*protected List<Message> findAllUserMessages(MessageFilter messageFilter) {
-        try {
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Message.class);
-
-            Root<Message> messageRoot = criteriaQuery.from(Message.class);
-
-            criteriaQuery.select(messageRoot);
-
-            criteriaQuery.where(criteriaBuilder.equal(messageRoot.get("sender_id"),messageFilter.getSenderId()));
-
-            TypedQuery<Message> messageTypedQuerry = entityManager.createQuery(criteriaQuery);
-            return messageTypedQuerry.getResultList();
-        }catch (Exception e){
-            return Collections.emptyList();
-        }
-    }*/
-    /*protected Optional<Message> findFew(MessageFilter filter,Integer number){
-        try{
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Message.class);
-
-            Root<Message> messageRoot = criteriaQuery.from(Message.class);
-
-            criteriaQuery.select(messageRoot);
-
-
-        }catch (Exception e){
-
-        }
-    }*/
 }
