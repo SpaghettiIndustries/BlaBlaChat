@@ -1,5 +1,6 @@
 package pl.infobazasolution.blablachat.component.user.service;
 
+import pl.infobazasolution.blablachat.component.user.session.UserSession;
 import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.common.util.PasswordUtils;
 import pl.infobazasolution.blablachat.component.user.dao.UserDao;
@@ -21,6 +22,9 @@ public class LoginService {
     @Inject
     private UserTokenIssuer userTokenIssuer;
 
+    @Inject
+    private UserSession userSession;
+
     public String login(LoginUser loginUser, UriInfo uriInfo) throws AuthenticationException {
 
         UserFilter filter = new UserFilter();
@@ -34,7 +38,10 @@ public class LoginService {
             loginUser.setPassword(PasswordUtils.digestPassword(loginUser.getPassword()));
 
             if (loginUser.getPassword().equals(userEntity.getPassword())) {
-                return userTokenIssuer.issueToken(userEntity.getNick(), LocalDateTime.now().plusDays(7L), uriInfo);
+                userSession.setId(userEntity.getId());
+                Integer id = userSession.getId();
+
+                return userTokenIssuer.issueToken(userEntity.getId().toString(), LocalDateTime.now().plusDays(7L), uriInfo);
             }
 
             throw new AuthenticationException("Podane hasło jest nieprawidłowe");
