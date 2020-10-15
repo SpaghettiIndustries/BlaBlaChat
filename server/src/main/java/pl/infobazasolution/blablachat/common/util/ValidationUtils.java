@@ -56,4 +56,10 @@ public class ValidationUtils {
 
         return false;
     }
+
+    public static Boolean userBelongsToTopic(Integer userId, Integer topicId, TopicDao topicDao) {
+        Topic topic = topicDao.findById(topicId).get();
+
+        return topic.getFirstUser().getId().equals(userId) || topic.getSecondUser().getId().equals(userId);
+    }
 }
