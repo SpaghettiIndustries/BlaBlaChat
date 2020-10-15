@@ -10,7 +10,7 @@ public class DeleteUserAction {
     @Inject
     private DeleteUserService deleteUserService;
 
-    public boolean execute(DeleteUser deleteUser){
-        return deleteUserService.delete(deleteUser);
+    public boolean execute() {
+        return deleteUserService.delete();
     }
 }
