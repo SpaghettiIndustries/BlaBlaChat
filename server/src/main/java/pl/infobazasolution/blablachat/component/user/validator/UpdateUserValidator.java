@@ -70,6 +70,8 @@ public class UpdateUserValidator {
 
                         if (ValidationUtils.containsWhitespace(updateUser.getPassword()))
                             throw new ValidationException("Hasło nie może zawierać spacji");
+                        if (updateUser.getPassword().length() < 8)
+                            throw new ValidationException("Hasło nie może być krótsze niż 8 znaków");
 
                     } else {
                         throw new ValidationException("Hasło nie może być puste!");
