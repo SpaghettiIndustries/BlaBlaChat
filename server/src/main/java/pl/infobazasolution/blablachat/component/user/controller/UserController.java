@@ -49,14 +49,14 @@ public class UserController {
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UserDto createUser(NewUser newUser) throws ValidationException {
-        return createUserAction.execute(newUser);
+    public Response createUser(NewUser newUser) throws AuthenticationException, ValidationException {
+        return createUserAction.execute(newUser, uriInfo);
     }
 
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginUser loginUser) throws AuthenticationException, ValidationException {
         return loginAction.execute(loginUser, uriInfo);
     }
@@ -73,8 +73,8 @@ public class UserController {
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean delete(DeleteUser deleteUser) throws ValidationException {
-        return deleteUserAction.execute(deleteUser);
+    public Boolean delete() {
+        return deleteUserAction.execute();
     }
 
 }
