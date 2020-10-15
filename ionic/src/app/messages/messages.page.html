@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="term" animated="true"  placeholder="Filter conversations" showCancelButton="focus" ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+      <ion-list-header>
+        Recent Conversations
+      </ion-list-header>
+
+      <ion-item *ngFor="let item of Message | filter:term"  class="conversation">
+          <ion-item onclick="location.href='/chat'">
+              <ion-avatar slot="start">
+                  <ion-img src="{{item.src}}"></ion-img>
+              </ion-avatar>
+              <ion-label>
+                  <h2 >{{item.nick}}</h2>
+                  <p>{{item.content}}</p>
+              </ion-label>
+          </ion-item>
+          <ion-buttons slot="end">
+              <ion-button (click)=presentPopover($event)>
+                  <ion-icon  slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+              </ion-button>
+          </ion-buttons>
+      </ion-item>
+
+  </ion-list>
+</ion-content>

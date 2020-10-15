@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Log in</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid id="container">
+      <form [formGroup]="ionicForm" (ngSubmit)="SubmitForm()">
+        <ion-item>
+          <ion-input formControlName="username"  placeholder="Login" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input formControlName="password"  placeholder="Password" type="password"></ion-input>
+        </ion-item>
+        <ion-button type="submit" (click)="login()"  expand="block" color="success">LOGIN</ion-button>
+      </form>
+
+      <ion-grid id="register">
+        <ion-text>
+          <h3>Haven't signed up yet?</h3>
+        </ion-text>
+          <ion-button onclick="location.href='/register'" expand="block" color="tertiary">Register now!</ion-button>
+      </ion-grid>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/messages"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="chat">
+    <div class="message me">Hello</div>
+    <div class="message you">Hello</div>
+    <div class="message you">How are you?</div>
+    <div class="message me">I'm fine</div>
+    <div class="message you">How about you?</div>
+    <div class="message me">I'm doing so amazingly you wouldn't believe all the things that are happening right now it would take up at least 50% of the width of the page to discuss all the things that I want to tell you.</div>
+  </div>
+
+  <form>
+    <ion-item >
+      <ion-input id="message" placeholder="Message" type="text"></ion-input>
+      <ion-input id="send" type="submit">
+        <ion-icon name="send"></ion-icon>
+      </ion-input>
+    </ion-item>
+  </form>
+
+</ion-content>
