@@ -6,4 +6,22 @@
 
     <display-name>BlaBlaChat</display-name>
 
+    <filter>
+        <filter-name>jwt-token-needed-filter</filter-name>
+        <filter-class>pl.infobazasolution.blablachat.security.jwt.JwtTokenNeededFilter</filter-class>
+        <!--<init-param>
+            <param-name>json</param-name>
+            <param-value>application/json</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cookie</param-name>
+            <param-value>application/cookie</param-value>
+        </init-param>-->
+    </filter>
+    <filter-mapping>
+        <filter-name>jwt-token-needed-filter</filter-name>
+        <url-pattern>/api/message/*</url-pattern>
+        <url-pattern>/api/user/get</url-pattern>
+        <url-pattern>/api/user/update</url-pattern>
+    </filter-mapping>
 </web-app>

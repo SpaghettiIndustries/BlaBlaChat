@@ -19,6 +19,11 @@ public class Message {
     private Integer id;
 
     @NotNull
+    @JoinColumn(name = "user_", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private User sender;
+
+    @NotNull
     @JoinColumn(name = "topic_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Topic topic;
@@ -46,6 +51,14 @@ public class Message {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
     public Topic getTopic() {

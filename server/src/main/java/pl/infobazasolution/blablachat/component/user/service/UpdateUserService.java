@@ -6,6 +6,7 @@ import pl.infobazasolution.blablachat.component.user.dto.NewUser;
 import pl.infobazasolution.blablachat.component.user.dto.UpdateUser;
 import pl.infobazasolution.blablachat.component.user.dto.UserDto;
 import pl.infobazasolution.blablachat.component.user.entity.User;
+import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
@@ -17,11 +18,14 @@ public class UpdateUserService {
     @Inject
     private UserDao userDao;
 
+    @Inject
+    private UserSession userSession;
+
     public UserDto update(UpdateUser updateUser) {
         try {
             User updateUserEntity = new User();
 
-            Optional<User> optional = userDao.findById(updateUser.getId());
+            Optional<User> optional = userDao.findById(userSession.getId());
             User user = optional.get();
 
             if (!Objects.nonNull(updateUser.getNick()))
@@ -42,7 +46,7 @@ public class UpdateUserService {
 
             updateUserEntity.setId(user.getId());
 
-            userDao.update(updateUser.getId(),updateUserEntity);
+            userDao.update(userSession.getId(), updateUserEntity);
 
             UserDto userDto = new UserDto();
 

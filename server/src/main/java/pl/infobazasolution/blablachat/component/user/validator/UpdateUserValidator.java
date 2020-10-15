@@ -18,7 +18,7 @@ public class UpdateUserValidator {
     public Boolean validate(UpdateUser updateUser) throws ValidationException {
 
         List<User> existingUsers = userDao.readAll();
-        Boolean foundId = false;
+        /*Boolean foundId = false;
 
         for (User existingUser : existingUsers) {
 
@@ -26,7 +26,7 @@ public class UpdateUserValidator {
                 foundId = true;
 
         }
-        if (foundId) {
+        if (foundId) {*/
             if (Objects.nonNull(updateUser.getNick())
                     || Objects.nonNull(updateUser.getPassword())
                     || Objects.nonNull(updateUser.getEmail())) {
@@ -81,6 +81,6 @@ public class UpdateUserValidator {
             }
             throw new ValidationException("Nie podano żadnych wartości");
         }
-        throw new ValidationException("Nie znaleziono użytkownika o podanym id");
-    }
+        /*throw new ValidationException("Nie znaleziono użytkownika o podanym id");
+    }*/
 }

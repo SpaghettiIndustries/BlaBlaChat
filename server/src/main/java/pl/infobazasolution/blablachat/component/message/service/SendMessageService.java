@@ -10,6 +10,9 @@ import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicFilter;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.topic.service.CreateTopicService;
+import pl.infobazasolution.blablachat.component.user.dao.UserDao;
+import pl.infobazasolution.blablachat.component.user.entity.User;
+import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
@@ -25,21 +28,27 @@ public class SendMessageService {
     private TopicDao topicDao;
 
     @Inject
+    private UserDao userDao;
+
+    @Inject
     private CreateTopicService createTopicService;
+
+    @Inject
+    private UserSession userSession;
 
     public MessageDto send(NewMessage newMessage) {
         Optional<Topic> topicMaybe;
 
-        if (Objects.nonNull(newMessage.getSenderId()) && Objects.nonNull(newMessage.getReceiverId())) {
+        if (Objects.nonNull(newMessage.getReceiverId())) {
             TopicFilter filter = new TopicFilter();
-            filter.setFirstUserId(newMessage.getSenderId());
+            filter.setFirstUserId(userSession.getId());
             filter.setSecondUserId(newMessage.getReceiverId());
 
             topicMaybe = topicDao.find(filter);
 
             if (!topicMaybe.isPresent()) {
                 NewTopic newTopic = new NewTopic();
-                newTopic.setFirstUserId(newMessage.getSenderId());
+                newTopic.setFirstUserId(userSession.getId());
                 newTopic.setSecondUserId(newMessage.getReceiverId());
 
                 TopicDto createdTopic = createTopicService.create(newTopic);
@@ -54,9 +63,11 @@ public class SendMessageService {
 
         if (topicMaybe.isPresent()) {
             Topic topic = topicMaybe.get();
+            User sender = userDao.findById(userSession.getId()).get();
 
             Message newMessageEntity = new Message();
 
+            newMessageEntity.setSender(sender);
             newMessageEntity.setTopic(topic);
             newMessageEntity.setContent(newMessage.getContent());
             newMessageEntity.setCreatedAt(ZonedDateTime.now());

@@ -2,18 +2,18 @@ package pl.infobazasolution.blablachat.component.message.dto;
 
 public class NewMessage {
 
-    private Integer senderId;
+    /*private Integer senderId;*/
     private Integer receiverId;
     private Integer topicId;
     private String content;
 
-    public Integer getSenderId() {
+    /*public Integer getSenderId() {
         return senderId;
     }
 
     public void setSenderId(Integer senderId) {
         this.senderId = senderId;
-    }
+    }*/
 
     public Integer getReceiverId() {
         return receiverId;
