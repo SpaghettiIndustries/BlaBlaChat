@@ -1,12 +1,14 @@
 package pl.infobazasolution.blablachat.component.message.controller;
 
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
+import pl.infobazasolution.blablachat.common.util.ValidationUtils;
 import pl.infobazasolution.blablachat.component.message.action.SendMessageAction;
 import pl.infobazasolution.blablachat.component.message.decoder.NewMessageDecoder;
 import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
 import pl.infobazasolution.blablachat.component.message.dto.NewMessage;
 import pl.infobazasolution.blablachat.component.message.encoder.MessageDtoEncoder;
 import pl.infobazasolution.blablachat.component.topic.dao.TopicDao;
+import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 
 import javax.inject.Inject;
 import javax.websocket.*;
@@ -24,6 +26,10 @@ import java.util.function.Predicate;
     encoders = MessageDtoEncoder.class
 )
 public class WebSocketMessageController {
+
+    // TODO: bierz użytkownika
+    // TODO: tylko powiadomienie
+    // TODO: użyj asynchronicznych eventów
 
     @Inject
     private SendMessageAction sendMessageAction;
@@ -51,9 +57,14 @@ public class WebSocketMessageController {
     @OnMessage
     public void onMessage(Session session, NewMessage newMessage) throws IOException, ValidationException {
         MessageDto messageDto = sendMessageAction.execute(newMessage);
+
+        Topic topic = topicDao.findById(messageDto.getTopicId()).get();
+
         Integer receiverId;
 
-        if (messageDto.getTopicId())
+        if (ValidationUtils.userBelongsToTopic())
+
+        if (topicDao.findById(messageDto.getTopicId()).isPresent())
 
         Predicate<Session> filterCriteria = (s) -> messageDto.get
     }

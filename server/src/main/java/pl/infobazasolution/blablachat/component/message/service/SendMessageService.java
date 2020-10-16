@@ -82,6 +82,7 @@ public class SendMessageService {
                 topicDao.update(topic.getId(), topic);
 
                 createdMessageDto.setId(createdMessageEntity.getId());
+                createdMessageDto.setSenderId(createdMessageEntity.getSender().getId());
                 createdMessageDto.setTopicId(createdMessageEntity.getTopic().getId());
                 createdMessageDto.setContent(createdMessageEntity.getContent());
                 createdMessageDto.setCreatedAt(createdMessageEntity.getCreatedAt());

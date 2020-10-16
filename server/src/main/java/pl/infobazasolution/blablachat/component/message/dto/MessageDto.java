@@ -10,6 +10,7 @@ import java.util.Date;
 public class MessageDto {
 
     private Integer id;
+    private Integer senderId;
     private Integer topicId;
     private String content;
 
@@ -24,6 +25,14 @@ public class MessageDto {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(Integer senderId) {
+        this.senderId = senderId;
     }
 
     public Integer getTopicId() {
