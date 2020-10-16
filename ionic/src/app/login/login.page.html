@@ -8,10 +8,10 @@
   <ion-grid>
       <ion-row>
           <ion-col size="10" offset="1" size-md="4" offset-md="1">
-              <form [formGroup]="ionicForm" (ngSubmit)="SubmitForm()" class="ion-align-items-center">
+              <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()" class="ion-align-items-center">
                   <ion-item lines="full">
                       <ion-label position="floating">Nick</ion-label>
-                      <ion-input formControlName="username" type="text"></ion-input>
+                      <ion-input formControlName="nick" type="text"></ion-input>
                   </ion-item>
 
                   <ion-item lines="full">
@@ -26,8 +26,8 @@
                   <ion-text>
                       <h3>Nie masz konta?</h3>
                   </ion-text>
-                  <ion-button onclick="location.href='/register'" expand="block" color="tertiary">Zarejestruj się!
-                  </ion-button>
+
+                  <ion-button onclick="location.href='/register'" expand="block" color="tertiary">Zarejestruj się!</ion-button>
               </ion-grid>
           </ion-col>
       </ion-row>

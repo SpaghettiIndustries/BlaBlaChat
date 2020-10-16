@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -10,26 +11,28 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class LoginPage implements OnInit {
 
-  ionicForm: FormGroup;
-  username;
+  @Input()
+  result$: Observable<any>;
 
-  constructor(public alertCtrl: AlertController,
-              private formBuilder: FormBuilder) {
-    this.ionicForm = this.formBuilder.group({
-      username: '',
-      password: ''
+  loginForm: FormGroup;
+
+  constructor(public alertCtrl: AlertController, private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      nick: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
   ngOnInit() {
   }
-  SubmitForm(){
-    console.log(this.ionicForm.value);
+
+  submitLoginForm() {
+    console.log(this.loginForm.value);
   }
 
-  async login(){
+  async login() {
     const alert = await this.alertCtrl.create({
-      message: 'Hello ' + this.ionicForm.get('username').value,
+      message: 'Hello ' + this.loginForm.get('username').value,
       buttons: [
         {
           text: 'Ok',
