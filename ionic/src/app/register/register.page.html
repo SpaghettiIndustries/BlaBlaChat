@@ -3,33 +3,33 @@
       <ion-buttons slot="start">
           <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
-    <ion-title>Register</ion-title>
+    <ion-title>Zarejestruj się</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form>
       <ion-item>
-        <ion-input placeholder="Login" type="text"    required></ion-input>
+        <ion-input placeholder="Nick" type="text" required></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input [minlength]="7" placeholder="Password" required type="password"></ion-input>
+        <ion-input [minlength]="8" placeholder="Hasło" required type="password"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="Confirm password" [minlength]="7" type="password"  required></ion-input>
+        <ion-input [minlength]="8" placeholder="Potwierdź hasło" type="password" required></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="Email" type="email"  required></ion-input>
+        <ion-input placeholder="E-mail" type="email" required></ion-input>
       </ion-item>
 
-      <ion-item>
+      <!--<ion-item>
           <ion-label>Accept regulation</ion-label>
-        <ion-checkbox  ></ion-checkbox>
-      </ion-item>
+        <ion-checkbox></ion-checkbox>
+      </ion-item>-->
 
-      <ion-button type="submit" onclick="location.href='/tabs'"  expand="block" color="success">CREATE ACCOUNT</ion-button>
+      <ion-button type="submit" onclick="location.href='/tabs'" expand="block" color="success" class="ion-margin-vertical">Zarejestruj się</ion-button>
   </form>
 </ion-content>
