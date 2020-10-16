@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 })
 export class RegisterService {
 
-  private readonly REGISTER_URL = `${environment.baseUrl}/user/register`;
+  private readonly REGISTER_URL = `${environment.baseUrl}/user/create`;
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class RegisterService {
     return this.http.post(this.REGISTER_URL, {
       'nick': nick,
       'password': password,
-      
+      'email': email !== undefined ? email : ''
     });
   }
 

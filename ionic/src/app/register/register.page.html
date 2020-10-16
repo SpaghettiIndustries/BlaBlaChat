@@ -11,24 +11,30 @@
     <ion-grid>
         <ion-row>
             <ion-col size="10" offset="1" size-md="4" offset-md="1">
-                <form>
-                      <ion-item>
-                          <ion-input placeholder="Nick" type="text" required></ion-input>
-                      </ion-item>
+                <form [formGroup]="registerForm" (submit)="registerFormSubmit()">
+                    <ion-item lines="full">
+                        <ion-label position="floating">Nick</ion-label>
+                        <ion-input formControlName="nick" type="text"></ion-input>
+                    </ion-item>
 
-                      <ion-item>
-                          <ion-input [minlength]="8" placeholder="Hasło" required type="password"></ion-input>
-                      </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Hasło</ion-label>
+                        <ion-input formControlName="password" type="password"></ion-input>
+                    </ion-item>
 
-                      <ion-item>
-                          <ion-input [minlength]="8" placeholder="Potwierdź hasło" type="password" required></ion-input>
-                      </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">Potwierdź hasło</ion-label>
+                        <ion-input formControlName="passwordConfirmation" type="password"></ion-input>
+                    </ion-item>
 
-                      <ion-item>
-                          <ion-input placeholder="E-mail" type="email" required></ion-input>
-                      </ion-item>
+                    <ion-item>
+                        <ion-label position="floating">E-mail</ion-label>
+                        <ion-input formControlName="email" type="email"></ion-input>
+                    </ion-item>
 
-                      <ion-button type="submit" onclick="location.href='/tabs'" expand="block" color="success" class="ion-margin-vertical">Zarejestruj się</ion-button>
+                    <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="success" class="ion-margin-vertical">
+                        Zarejestruj się
+                    </ion-button>
 
                     <!--<ion-item>
                         <ion-label>Accept regulation</ion-label>
