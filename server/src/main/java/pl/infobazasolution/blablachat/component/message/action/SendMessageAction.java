@@ -9,7 +9,7 @@ import pl.infobazasolution.blablachat.component.message.validator.NewMessageVali
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-@RequestScoped
+/*@RequestScoped*/
 public class SendMessageAction {
 
     @Inject
