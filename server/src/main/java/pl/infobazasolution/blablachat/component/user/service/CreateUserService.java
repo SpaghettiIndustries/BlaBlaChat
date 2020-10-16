@@ -18,8 +18,8 @@ public class CreateUserService {
     public UserDto create(NewUser newUser) {
         User newUserEntity = new User();
 
-        newUserEntity.setNick(newUser.getNick());
-        newUserEntity.setEmail(newUser.getEmail());
+        newUserEntity.setNick(newUser.getNick().toLowerCase());
+        newUserEntity.setEmail(newUser.getEmail().toLowerCase());
         newUserEntity.setPassword(PasswordUtils.digestPassword(newUser.getPassword()));
         newUserEntity.setCreatedAt(ZonedDateTime.now());
 
