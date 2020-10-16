@@ -1,0 +1,43 @@
+#message
+{
+  width:80%;
+}
+#send
+{
+  width: 20%;
+  float:right;
+}
+ion-item
+{
+  position:fixed;
+  width:100%;
+  bottom:5px;
+  left:0;
+  right:0;
+}
+.chat
+{
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+.message
+{
+  border-radius: 10px;
+  margin: 0.2em 0;
+  padding: 0.5em;
+  max-width: 65%;
+  color: #f3f3f3;
+}
+
+.me {
+  align-self: flex-start;
+  background: rgba(0,0,255,.2);
+  border-bottom:3px solid #00004e;
+}
+
+.you {
+  align-self: flex-end;
+  background: rgba(58,43,101,.2);
+  border-bottom:3px solid #200032;
+}
