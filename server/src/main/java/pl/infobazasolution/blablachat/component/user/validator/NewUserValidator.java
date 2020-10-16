@@ -30,7 +30,7 @@ public class NewUserValidator {
         if (newUser.getNick().length() > 25)
             throw new ValidationException("Nick nie może mieć więcej niż 25 znaków");
 
-        if (Objects.nonNull(newUser.getEmail()) && !ValidationUtils.isValidEmail(newUser.getEmail()))
+        if (Objects.nonNull(newUser.getEmail()) && !newUser.getEmail().equals("") && !ValidationUtils.isValidEmail(newUser.getEmail()))
             throw new ValidationException("E-mail nie jest prawidłowy");
 
         if (newUser.getPassword().trim().isEmpty())
