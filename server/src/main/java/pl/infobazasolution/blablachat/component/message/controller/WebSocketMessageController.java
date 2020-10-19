@@ -7,16 +7,17 @@ import pl.infobazasolution.blablachat.component.message.decoder.NewMessageDecode
 import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
 import pl.infobazasolution.blablachat.component.message.dto.NewMessage;
 import pl.infobazasolution.blablachat.component.message.encoder.MessageDtoEncoder;
+import pl.infobazasolution.blablachat.component.message.event.MessageSentEvent;
 import pl.infobazasolution.blablachat.component.topic.dao.TopicDao;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Predicate;
 
@@ -31,22 +32,15 @@ public class WebSocketMessageController {
     // TODO: tylko powiadomienie
     // TODO: użyj asynchronicznych eventów
 
-    @Inject
-    private SendMessageAction sendMessageAction;
-
-    @Inject
-    private TopicDao topicDao;
-
     private Session session;
     private Integer userId;
 
-    /*private static Set<WebSocketMessageController> chatEndpoints = new CopyOnWriteArraySet<>();*/
+    private static Map<String, Integer> peers = Collections.synchronizedMap(new HashMap<String, Integer>());
     private static HashMap<String, Integer> users = new HashMap<>();
 
     @OnOpen
     public void onOpen(Session session, @PathParam("user") Integer userId) throws IOException {
         this.session = session;
-        this.userId = userId;
 
         session.getUserProperties().put("userId", userId);
 
@@ -54,19 +48,13 @@ public class WebSocketMessageController {
         users.put(session.getId(), userId);
     }
 
+    public void onMessageSent(@Observes MessageSentEvent messageSentEvent) {
+
+    }
+
     @OnMessage
-    public void onMessage(Session session, NewMessage newMessage) throws IOException, ValidationException {
-        MessageDto messageDto = sendMessageAction.execute(newMessage);
+    public void onMessage(Session session, NewMessage newMessage) throws IOException {
 
-        Topic topic = topicDao.findById(messageDto.getTopicId()).get();
-
-        Integer receiverId;
-
-        if (ValidationUtils.userBelongsToTopic())
-
-        if (topicDao.findById(messageDto.getTopicId()).isPresent())
-
-        Predicate<Session> filterCriteria = (s) -> messageDto.get
     }
 
     @OnClose
