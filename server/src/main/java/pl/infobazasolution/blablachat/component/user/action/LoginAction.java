@@ -31,7 +31,7 @@ public class LoginAction {
     public Response execute(LoginUser loginUser, UriInfo uriInfo) throws AuthenticationException, ValidationException {
         if (loginValidator.validate(loginUser)) {
             String token = loginService.login(loginUser, uriInfo);
-            NewCookie cookie = new NewCookie("token", token, "/", uriInfo.getBaseUri().getHost(), 1, "", LocalDateTime.now().plusDays(7L).getSecond(), false);
+            NewCookie cookie = new NewCookie("token", token, "/", "localhost", 1, "", 604800, false);
 
             UserFilter filter = new UserFilter();
             filter.setNick(loginUser.getNick());
