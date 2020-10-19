@@ -19,7 +19,7 @@ public class Message {
     private Integer id;
 
     @NotNull
-    @JoinColumn(name = "user_", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "sender_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User sender;
 
