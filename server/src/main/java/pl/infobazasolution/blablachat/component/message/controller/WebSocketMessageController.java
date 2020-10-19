@@ -1,73 +1,47 @@
 package pl.infobazasolution.blablachat.component.message.controller;
 
-import pl.infobazasolution.blablachat.common.exception.ValidationException;
-import pl.infobazasolution.blablachat.common.util.ValidationUtils;
-import pl.infobazasolution.blablachat.component.message.action.SendMessageAction;
-import pl.infobazasolution.blablachat.component.message.decoder.NewMessageDecoder;
 import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
-import pl.infobazasolution.blablachat.component.message.dto.NewMessage;
-import pl.infobazasolution.blablachat.component.message.encoder.MessageDtoEncoder;
+import pl.infobazasolution.blablachat.component.message.encoder.MessageSentEventEncoder;
 import pl.infobazasolution.blablachat.component.message.event.MessageSentEvent;
 import pl.infobazasolution.blablachat.component.topic.dao.TopicDao;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
+import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.ObservesAsync;
 import javax.inject.Inject;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.function.Predicate;
 
 @ServerEndpoint(
-    value="/message/socket/{user}",
-    decoders = NewMessageDecoder.class,
-    encoders = MessageDtoEncoder.class
+    value="/message/socket",
+    encoders = MessageSentEventEncoder.class
 )
 public class WebSocketMessageController {
 
-    // TODO: bierz użytkownika
-    // TODO: tylko powiadomienie
-    // TODO: użyj asynchronicznych eventów
+    @Inject
+    private TopicDao topicDao;
+
+    @Inject
+    private UserSession userSession;
 
     private Session session;
-    private Integer userId;
-
-    private static Map<String, Integer> peers = Collections.synchronizedMap(new HashMap<String, Integer>());
-    private static HashMap<String, Integer> users = new HashMap<>();
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("user") Integer userId) throws IOException {
+    public void onOpen(Session session) throws IOException {
         this.session = session;
-
-        session.getUserProperties().put("userId", userId);
-
-        /*chatEndpoints.add(this);*/
-        users.put(session.getId(), userId);
     }
 
-    public void onMessageSent(@Observes MessageSentEvent messageSentEvent) {
+    public void onMessageSent(@ObservesAsync MessageSentEvent messageSentEvent) throws IOException, EncodeException {
+        Topic topic = topicDao.findById(messageSentEvent.getId()).get();
 
-    }
+        Integer receiverId = messageSentEvent.getSenderId().equals(topic.getFirstUser().getId()) ? topic.getSecondUser().getId() : topic.getFirstUser().getId();
 
-    @OnMessage
-    public void onMessage(Session session, NewMessage newMessage) throws IOException {
-
-    }
-
-    @OnClose
-    public void onClose(Session session) throws IOException {
-        chatEndpoints.remove(this);
-    }
-
-    @OnError
-    public void onError(Session session, Throwable throwable) {
-
-    }
-
-    private static void broadcastMessage(MessageDto messageDto) throws IOException, EncodeException {
-        chatEndpoints.stream().
+        if (userSession.getId().equals(receiverId)) {
+            session.getBasicRemote().sendObject(messageSentEvent);
+        }
     }
 }

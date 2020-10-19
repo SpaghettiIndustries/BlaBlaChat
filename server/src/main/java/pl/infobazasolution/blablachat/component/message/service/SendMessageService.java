@@ -89,7 +89,7 @@ public class SendMessageService {
                 messageSent.setContent(createdMessageEntity.getContent());
                 messageSent.setCreatedAt(createdMessageEntity.getCreatedAt());
 
-                messageSentEvent.fire(messageSent);
+                messageSentEvent.fireAsync(messageSent);
 
                 MessageDto createdMessageDto = new MessageDto();
 
