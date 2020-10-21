@@ -15,6 +15,7 @@ import pl.infobazasolution.blablachat.component.user.dao.UserDao;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.time.ZonedDateTime;

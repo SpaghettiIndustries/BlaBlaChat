@@ -28,6 +28,8 @@ public class JwtTokenNeededFilter implements Filter {
         if (Objects.nonNull(claims)) {
             userSession.setId(Integer.parseInt(claims.getSubject()));
             filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse);
         }
     }
 }
