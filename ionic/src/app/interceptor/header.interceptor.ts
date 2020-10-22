@@ -9,6 +9,6 @@ export class HeaderInterceptor implements HttpInterceptor {
            setHeaders: { "Content-Type": "application/json" }
         });
 
-        return next.handle(httpRequest);
+        return next.handle(modifiedHttpRequest);
     }
 }
