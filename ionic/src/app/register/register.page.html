@@ -32,7 +32,8 @@
                         <ion-input formControlName="email" type="email"></ion-input>
                     </ion-item>
 
-                    <ion-button type="submit" [disabled]="!registerForm.valid" expand="block" color="success" class="ion-margin-vertical">
+                    <ion-button type="submit" [disabled]="loading" expand="block" color="success" class="ion-margin-vertical">
+                        <ion-spinner *ngIf="loading"></ion-spinner>
                         Zarejestruj się
                     </ion-button>
 
@@ -40,6 +41,8 @@
                         <ion-label>Accept regulation</ion-label>
                       <ion-checkbox></ion-checkbox>
                     </ion-item>-->
+
+                    <div *ngIf="error" class=" ion-margin-top">{{ error }}</div>
                 </form>
             </ion-col>
         </ion-row>
