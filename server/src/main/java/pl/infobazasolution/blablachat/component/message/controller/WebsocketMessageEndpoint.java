@@ -26,17 +26,18 @@ public class WebsocketMessageEndpoint {
     @Inject
     private TopicDao topicDao;
 
-    /*@Inject
-    private UserSession userSession;*/
-
-    private final Integer userId = 902;
+    @Inject
+    private UserSession userSession;
 
     private Session session;
+    private Integer userId;
+
     private static Set<WebsocketMessageEndpoint> endpoints = new CopyOnWriteArraySet<>();
 
     @OnOpen
     public void onOpen(Session session) throws IOException {
         this.session = session;
+        this.userId = userSession.getId();
 
         endpoints.add(this);
     }
