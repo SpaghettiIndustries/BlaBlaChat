@@ -11,6 +11,7 @@ import pl.infobazasolution.blablachat.component.user.validator.NewUserValidator;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -37,9 +38,7 @@ public class CreateUserAction {
 
             String token = loginService.login(loginUser, uriInfo);
 
-            NewCookie cookie = new NewCookie("token", token);
-
-            return Response.ok(newUserDto).cookie(cookie).build();
+            return Response.ok(newUserDto).header(HttpHeaders.AUTHORIZATION, "Bearer " + token).build();
         }
 
         return null;

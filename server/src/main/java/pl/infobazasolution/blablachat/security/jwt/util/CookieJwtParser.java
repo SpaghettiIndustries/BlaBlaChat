@@ -1,3 +1,4 @@
+/*
 package pl.infobazasolution.blablachat.security.jwt.util;
 
 import io.jsonwebtoken.Claims;
@@ -36,3 +37,4 @@ public class CookieJwtParser implements JwtParser {
         return null;
     }
 }
+*/

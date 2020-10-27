@@ -11,6 +11,7 @@ import pl.infobazasolution.blablachat.component.user.validator.LoginValidator;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -31,13 +32,12 @@ public class LoginAction {
     public Response execute(LoginUser loginUser, UriInfo uriInfo) throws AuthenticationException, ValidationException {
         if (loginValidator.validate(loginUser)) {
             String token = loginService.login(loginUser, uriInfo);
-            NewCookie cookie = new NewCookie("token", token, "/", "localhost", 1, "", 604800, false);
 
             UserFilter filter = new UserFilter();
             filter.setNick(loginUser.getNick());
             UserDto userDto = findUserService.find(filter);
 
-            return Response.ok(userDto).cookie(cookie).build();
+            return Response.ok(userDto).header(HttpHeaders.AUTHORIZATION, "Bearer " + token).build();
         }
 
         return null;
