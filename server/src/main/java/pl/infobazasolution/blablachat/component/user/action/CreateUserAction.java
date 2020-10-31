@@ -2,6 +2,7 @@ package pl.infobazasolution.blablachat.component.user.action;
 
 import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
+import pl.infobazasolution.blablachat.component.user.dto.LoggedInUser;
 import pl.infobazasolution.blablachat.component.user.dto.LoginUser;
 import pl.infobazasolution.blablachat.component.user.dto.NewUser;
 import pl.infobazasolution.blablachat.component.user.dto.UserDto;
@@ -38,7 +39,9 @@ public class CreateUserAction {
 
             String token = loginService.login(loginUser, uriInfo);
 
-            return Response.ok(newUserDto).header(HttpHeaders.AUTHORIZATION, "Bearer " + token).build();
+            LoggedInUser loggedInUser = new LoggedInUser(newUserDto, token);
+
+            return Response.ok(loggedInUser).build();
         }
 
         return null;

@@ -2,6 +2,7 @@ package pl.infobazasolution.blablachat.component.user.action;
 
 import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
+import pl.infobazasolution.blablachat.component.user.dto.LoggedInUser;
 import pl.infobazasolution.blablachat.component.user.dto.LoginUser;
 import pl.infobazasolution.blablachat.component.user.dto.UserDto;
 import pl.infobazasolution.blablachat.component.user.dto.UserFilter;
@@ -37,7 +38,9 @@ public class LoginAction {
             filter.setNick(loginUser.getNick());
             UserDto userDto = findUserService.find(filter);
 
-            return Response.ok(userDto).header(HttpHeaders.AUTHORIZATION, "Bearer " + token).build();
+            LoggedInUser loggedInUser = new LoggedInUser(userDto, token);
+
+            return Response.ok(loggedInUser).build();
         }
 
         return null;
