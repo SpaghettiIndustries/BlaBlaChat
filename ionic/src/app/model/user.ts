@@ -3,4 +3,5 @@ export class User {
     nick: string;
     email?: string;
     createdAt: string;
+    authenticationToken?: string;
 }
