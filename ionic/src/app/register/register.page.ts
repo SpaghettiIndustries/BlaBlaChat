@@ -19,9 +19,9 @@ export class RegisterPage implements OnInit {
   error = '';
 
   constructor(
-      private formBuilder: FormBuilder,
-      private authenticationService: AuthenticationService,
-      private router: Router
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
