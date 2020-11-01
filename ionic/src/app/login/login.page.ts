@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from "rxjs";
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from '../service/authentication.service';
+import { first } from "rxjs/operators";
 
 
 @Component({
@@ -11,37 +13,53 @@ import {Observable} from "rxjs";
 })
 export class LoginPage implements OnInit {
 
-  @Input()
-  result$: Observable<any>;
-
   loginForm: FormGroup;
+  loading = false;
+  submitted = false;
+  returnUrl: string;
+  error = '';
 
-  constructor(public alertCtrl: AlertController, private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
+
+  ngOnInit() {
     this.loginForm = this.formBuilder.group({
       nick: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(25)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
-  ngOnInit() {
-  }
+  get form() { return this.loginForm.controls; }
 
-  submitLoginForm() {
-    console.log(this.loginForm.value);
-  }
+  loginFormSubmit() {
+    this.submitted = true;
 
-  async login() {
-    const alert = await this.alertCtrl.create({
-      message: 'Hello ' + this.loginForm.get('username').value,
-      buttons: [
-        {
-          text: 'Ok',
-          handler: data => {
-            window.location.href = '/tabs';
-          }
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.authenticationService.login(this.form.nick.value, this.form.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
         }
-      ]
-    });
-    await alert.present();
+      );
   }
 }

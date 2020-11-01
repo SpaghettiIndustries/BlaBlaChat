@@ -1,25 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Zaloguj się</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Zaloguj się</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
       <ion-row>
           <ion-col size="10" offset="1" size-md="4" offset-md="1">
-              <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()" class="ion-align-items-center">
-                  <ion-item lines="full">
+              <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" class="ion-align-items-center">
+                  <ion-item>
                       <ion-label position="floating">Nick</ion-label>
                       <ion-input formControlName="nick" type="text"></ion-input>
                   </ion-item>
 
-                  <ion-item lines="full">
+                  <ion-item>
                       <ion-label position="floating">Hasło</ion-label>
                       <ion-input formControlName="password" type="password"></ion-input>
                   </ion-item>
 
-                  <ion-button type="submit" (click)="login()" expand="block" color="success" class="ion-margin-vertical">Zaloguj się</ion-button>
+                  <ion-button type="submit" [disabled]="loading" expand="block" color="success" class="ion-margin-vertical">
+                      <ion-spinner *ngIf="loading"></ion-spinner>
+                      Zaloguj się
+                  </ion-button>
+
+                  <div *ngIf="error" class="ion-margin-top">{{ error }}</div>
               </form>
 
               <ion-grid id="register">
