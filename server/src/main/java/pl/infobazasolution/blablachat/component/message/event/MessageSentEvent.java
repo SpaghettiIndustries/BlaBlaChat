@@ -1,13 +1,8 @@
-package pl.infobazasolution.blablachat.component.message.dto;
-
-import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
-import pl.infobazasolution.blablachat.component.topic.entity.Topic;
-import pl.infobazasolution.blablachat.component.user.entity.User;
+package pl.infobazasolution.blablachat.component.message.event;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 
-public class MessageDto {
+public class MessageSentEvent {
 
     private Integer id;
     private Integer senderId;
@@ -15,9 +10,6 @@ public class MessageDto {
     private String content;
 
     private ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
-    private ZonedDateTime readAt;
-    private ZonedDateTime deletedAt;
 
     public Integer getId() {
         return id;
@@ -57,29 +49,5 @@ public class MessageDto {
 
     public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public ZonedDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public ZonedDateTime getReadAt() {
-        return readAt;
-    }
-
-    public void setReadAt(ZonedDateTime readAt) {
-        this.readAt = readAt;
-    }
-
-    public ZonedDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(ZonedDateTime deletedAt) {
-        this.deletedAt = deletedAt;
     }
 }

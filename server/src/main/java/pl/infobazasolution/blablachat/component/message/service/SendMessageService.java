@@ -4,6 +4,7 @@ import pl.infobazasolution.blablachat.component.message.dao.MessageDao;
 import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
 import pl.infobazasolution.blablachat.component.message.dto.NewMessage;
 import pl.infobazasolution.blablachat.component.message.entity.Message;
+import pl.infobazasolution.blablachat.component.message.event.MessageSentEvent;
 import pl.infobazasolution.blablachat.component.topic.dao.TopicDao;
 import pl.infobazasolution.blablachat.component.topic.dto.NewTopic;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
@@ -14,6 +15,8 @@ import pl.infobazasolution.blablachat.component.user.dao.UserDao;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -32,6 +35,9 @@ public class SendMessageService {
 
     @Inject
     private CreateTopicService createTopicService;
+
+    @Inject
+    private Event<MessageSentEvent> messageSentEvent;
 
     @Inject
     private UserSession userSession;
@@ -76,12 +82,23 @@ public class SendMessageService {
 
             if (message.isPresent()) {
                 Message createdMessageEntity = message.get();
+
+                MessageSentEvent messageSent = new MessageSentEvent();
+                messageSent.setId(createdMessageEntity.getId());
+                messageSent.setSenderId(createdMessageEntity.getSender().getId());
+                messageSent.setTopicId(createdMessageEntity.getTopic().getId());
+                messageSent.setContent(createdMessageEntity.getContent());
+                messageSent.setCreatedAt(createdMessageEntity.getCreatedAt());
+
+                messageSentEvent.fireAsync(messageSent);
+
                 MessageDto createdMessageDto = new MessageDto();
 
                 topic.setUpdatedAt(createdMessageEntity.getCreatedAt());
                 topicDao.update(topic.getId(), topic);
 
                 createdMessageDto.setId(createdMessageEntity.getId());
+                createdMessageDto.setSenderId(createdMessageEntity.getSender().getId());
                 createdMessageDto.setTopicId(createdMessageEntity.getTopic().getId());
                 createdMessageDto.setContent(createdMessageEntity.getContent());
                 createdMessageDto.setCreatedAt(createdMessageEntity.getCreatedAt());

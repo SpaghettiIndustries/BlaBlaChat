@@ -2,7 +2,7 @@ package pl.infobazasolution.blablachat.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import pl.infobazasolution.blablachat.component.user.session.UserSession;
-import pl.infobazasolution.blablachat.security.jwt.util.CookieJwtParser;
+import pl.infobazasolution.blablachat.security.jwt.util.HeaderJwtParser;
 import pl.infobazasolution.blablachat.security.jwt.util.JwtParser;
 
 import javax.annotation.Priority;
@@ -16,7 +16,7 @@ import java.util.Objects;
 public class JwtTokenNeededFilter implements Filter {
 
     @Inject
-    private CookieJwtParser jwtParser;
+    private HeaderJwtParser jwtParser;
 
     @Inject
     private UserSession userSession;

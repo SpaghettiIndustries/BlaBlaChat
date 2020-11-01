@@ -2,6 +2,7 @@ package pl.infobazasolution.blablachat.component.user.action;
 
 import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.common.exception.ValidationException;
+import pl.infobazasolution.blablachat.component.user.dto.LoggedInUser;
 import pl.infobazasolution.blablachat.component.user.dto.LoginUser;
 import pl.infobazasolution.blablachat.component.user.dto.NewUser;
 import pl.infobazasolution.blablachat.component.user.dto.UserDto;
@@ -11,6 +12,7 @@ import pl.infobazasolution.blablachat.component.user.validator.NewUserValidator;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -37,9 +39,9 @@ public class CreateUserAction {
 
             String token = loginService.login(loginUser, uriInfo);
 
-            NewCookie cookie = new NewCookie("token", token);
+            LoggedInUser loggedInUser = new LoggedInUser(newUserDto, token);
 
-            return Response.ok(newUserDto).cookie(cookie).build();
+            return Response.ok(loggedInUser).build();
         }
 
         return null;

@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { TabsPage } from './tabs/tabs.page';
+import { AuthenticationGuard } from './guard/authentication.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: '',
+    canActivate: [AuthenticationGuard],
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
@@ -21,10 +19,12 @@ const routes: Routes = [
   },
   {
     path: 'chat',
+    canActivate: [AuthenticationGuard],
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   },
   {
     path: 'change',
+    canActivate: [AuthenticationGuard],
     loadChildren: () => import('./change/change.module').then( m => m.ChangePageModule)
   }
 ];
