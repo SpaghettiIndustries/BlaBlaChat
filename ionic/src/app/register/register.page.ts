@@ -37,6 +37,8 @@ export class RegisterPage implements OnInit {
     }, {
       validator: MustMatchValidator('password', 'passwordConfirmation')
     });
+
+    this.returnUrl = '/';
   }
 
   get form() { return this.registerForm.controls; }

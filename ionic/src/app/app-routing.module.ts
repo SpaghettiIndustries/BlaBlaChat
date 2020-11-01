@@ -4,11 +4,6 @@ import { TabsPage } from './tabs/tabs.page';
 import { AuthenticationGuard } from './guard/authentication.guard';
 
 const routes: Routes = [
-  /*{
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },*/
   {
     path: '',
     canActivate: [AuthenticationGuard],
