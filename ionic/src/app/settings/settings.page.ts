@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import {AuthenticationService} from '../service/authentication.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { AlertController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
 
 
-constructor(public alertCtrl: AlertController) { }
+constructor(public alertCtrl: AlertController,private authenticationService: AuthenticationService) { }
 
   async Delete(){
     const alert = await this.alertCtrl.create({
@@ -49,7 +50,9 @@ constructor(public alertCtrl: AlertController) { }
     });
     await alert.present();
   }
-
+  logout(){
+    this.authenticationService.logout();
+  }
   ngOnInit() {
   }
 

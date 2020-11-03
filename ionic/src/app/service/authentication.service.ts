@@ -25,6 +25,7 @@ export class AuthenticationService {
   }
 
   register(nick: string, password: string, email?: string) {
+
       return this.http.post<any>(this.REGISTER_URL, {
         nick,
         password,
@@ -49,6 +50,7 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('currentUser');
+    window.location.href = '/login';
     this.currentUserSubject.next(null);
   }
 }

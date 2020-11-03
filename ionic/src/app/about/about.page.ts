@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AuthenticationService} from '../service/authentication.service';
+import { User } from '../model/user';
 @Component({
   selector: 'app-about',
   templateUrl: './about.page.html',
@@ -10,19 +11,12 @@ import { Component, OnInit } from '@angular/core';
 
 export class AboutPage implements OnInit {
 
-  Nicks = [
-    {nick: 'pioter', id: 1},
-    {nick: 'wiktor', id: 2},
-    {nick: 'pawel', id: 3}
-  ];
-  Emails = [
-    {email: 'xyz@wp.pl', id: 1},
-    {email: '123@wp.pl', id: 2},
-    {email: 'wsad@wp.pl', id: 3}
-  ];
+  currentUser: User;
 
-  constructor() { }
-
+  constructor(private authenticationService: AuthenticationService)
+  {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
   ngOnInit() {
   }
 
