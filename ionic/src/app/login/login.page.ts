@@ -55,11 +55,17 @@ export class LoginPage implements OnInit {
       .subscribe(
         data => {
           this.router.navigate([this.returnUrl]);
+
+          this.loginForm.reset();
+          this.loading = false;
+          this.error = null;
         },
         error => {
           this.error = error;
           this.loading = false;
         }
       );
+
+    this.submitted = false;
   }
 }
