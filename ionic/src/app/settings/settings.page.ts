@@ -46,7 +46,7 @@ export class SettingsPage implements OnInit {
           }
         },
         {
-          text: 'No',
+          text: 'No'
         }
       ]
     });
