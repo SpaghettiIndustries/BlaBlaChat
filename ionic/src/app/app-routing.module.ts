@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs/tabs.page';
 import { AuthenticationGuard } from './guard/authentication.guard';
 
 const routes: Routes = [
@@ -26,7 +25,7 @@ const routes: Routes = [
     path: 'change',
     canActivate: [AuthenticationGuard],
     loadChildren: () => import('./change/change.module').then( m => m.ChangePageModule)
-  }
+  },
 ];
 
 @NgModule({
