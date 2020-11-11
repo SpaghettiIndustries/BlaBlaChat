@@ -26,16 +26,15 @@ export class AuthenticationService {
   }
 
   register(nick: string, password: string, email?: string) {
-
-      return this.http.post<any>(this.REGISTER_URL, {
-        nick,
-        password,
-        email: email !== undefined ? email : ''
-      }).pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }));
+    return this.http.post<any>(this.REGISTER_URL, {
+      nick,
+      password,
+      email: email !== undefined ? email : ''
+    }).pipe(map(user => {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+      return user;
+    }));
   }
 
   login(nick: string, password: string) {

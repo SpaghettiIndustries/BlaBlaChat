@@ -32,7 +32,6 @@ public class CreateTopicService {
             TopicDto createdTopicDto = new TopicDto();
 
             createdTopicDto.setId(createdTopicEntity.getId());
-            createdTopicDto.setFirstUserId(createdTopicEntity.getFirstUser().getId());
             createdTopicDto.setSecondUserId(createdTopicEntity.getSecondUser().getId());
             createdTopicDto.setCreatedAt(createdTopicEntity.getCreatedAt());
 

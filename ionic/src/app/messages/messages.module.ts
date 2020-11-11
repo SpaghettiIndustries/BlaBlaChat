@@ -6,7 +6,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MessagesPageRoutingModule } from './messages-routing.module';
 
 import { MessagesPage } from './messages.page';
-
+import { ConversationComponent } from '../conversation/conversation.component';
 
 @NgModule({
   imports: [
@@ -17,6 +17,6 @@ import { MessagesPage } from './messages.page';
     MessagesPageRoutingModule
   ],
   entryComponents: [],
-  declarations: [MessagesPage]
+  declarations: [MessagesPage, ConversationComponent]
 })
 export class MessagesPageModule {}

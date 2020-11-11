@@ -100,7 +100,7 @@ public class MessageDao extends AbstractDao<Message, MessageFilter> {
                 return Collections.emptyList();
             }
 
-            TypedQuery<Message> messageTypedQuery = entityManager.createQuery(criteriaQuery);
+            TypedQuery<Message> messageTypedQuery = entityManager.createQuery(criteriaQuery).setMaxResults(filter.getNumberOfMessages());
 
             return messageTypedQuery.getResultList();
         } catch (Exception e) {
