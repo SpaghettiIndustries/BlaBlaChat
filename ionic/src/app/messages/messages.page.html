@@ -1,5 +1,5 @@
-<ion-header class="ion-padding-vertical">
-    <ion-toolbar>
+<ion-header>
+    <ion-toolbar class="ion-padding">
         <ion-title class="ion-margin-bottom">Wiadomości</ion-title>
 
         <ion-searchbar [(ngModel)]="term" animated="true"  placeholder="Filter conversations" showCancelButton="focus" class="ion-padding-horizontal"></ion-searchbar>
@@ -7,26 +7,25 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-item *ngFor="let item of Message | filter:term" onclick="location.href='/chat'" class="conversation">
-            <ion-avatar slot="start">
-                <ion-img src="{{ item.src }}"></ion-img>
-            </ion-avatar>
+    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+        <ion-refresher-content>
+            <ion-list>
+                <!--<app-conversation *ngFor="let item of Message | filter:term" [content]="{{ item.content }}"></app-conversation>-->
+                <!--<ion-item *ngFor="let item of Message | filter:term" onclick="location.href='/chat'">
+                    <ion-avatar slot="start">
+                        <ion-img src="{{ item.src }}"></ion-img>
+                    </ion-avatar>
 
-            <ion-label>
-                <h2 >{{ item.nick }}</h2>
-                <p>
-                    {{ item.content }}
+                    <ion-label>
+                        <h2 >{{ item.nick }}</h2>
+                        <p>
+                            {{ item.content }}
 
-                    <ion-text color="medium">12.12.2012</ion-text>
-                </p>
-            </ion-label>
-
-            <ion-buttons slot="end">
-                <ion-button (click)=presentPopover($event)>
-                    <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-        </ion-item>
-    </ion-list>
+                            <ion-text color="medium">12.12.2012</ion-text>
+                        </p>
+                    </ion-label>
+                </ion-item>-->
+            </ion-list>
+        </ion-refresher-content>
+    </ion-refresher>
 </ion-content>

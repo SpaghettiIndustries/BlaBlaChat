@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
-import { first } from "rxjs/operators";
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -55,11 +55,17 @@ export class LoginPage implements OnInit {
       .subscribe(
         data => {
           this.router.navigate([this.returnUrl]);
+
+          this.loginForm.reset();
+          this.loading = false;
+          this.error = null;
         },
         error => {
           this.error = error;
           this.loading = false;
         }
       );
+
+    this.submitted = false;
   }
 }

@@ -9,9 +9,13 @@ import { MessagesPopoverComponent} from '../messages-popover/messages-popover.co
 })
 export class MessagesPage implements OnInit {
 
-  constructor(public popoverController: PopoverController) {
+  term: string;
+
+  constructor(public popoverController: PopoverController) {}
+
+  ngOnInit() {
   }
-  term = '';
+
   Message = [
     { nick: 'PUDZIAN',
       src: 'https://n-22-6.dcs.redcdn.pl/file/o2/redefine/cp/1s/1ssk46fv243bixm4i8ffh6c8pkqm6e9e.jpg',
@@ -27,17 +31,17 @@ export class MessagesPage implements OnInit {
     }
   ];
 
-  async presentPopover(eve) {
+  async refresh(event) {
+    
+  }
+
+  async presentPopover(event) {
     const popover = await this.popoverController.create({
       component: MessagesPopoverComponent,
       cssClass: 'message-popover',
-      event: eve,
+      event,
       translucent: true
     });
     return await popover.present();
   }
-
-  ngOnInit() {
-  }
-
 }

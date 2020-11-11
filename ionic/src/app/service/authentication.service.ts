@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../model/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -25,16 +26,15 @@ export class AuthenticationService {
   }
 
   register(nick: string, password: string, email?: string) {
-
-      return this.http.post<any>(this.REGISTER_URL, {
-        nick,
-        password,
-        email: email !== undefined ? email : ''
-      }).pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      }));
+    return this.http.post<any>(this.REGISTER_URL, {
+      nick,
+      password,
+      email: email !== undefined ? email : ''
+    }).pipe(map(user => {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.currentUserSubject.next(user);
+      return user;
+    }));
   }
 
   login(nick: string, password: string) {
@@ -50,7 +50,8 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('currentUser');
-    window.location.href = '/login';
     this.currentUserSubject.next(null);
+
+    this.router.navigate(['login']);
   }
 }
