@@ -39,7 +39,6 @@ public class GetMessagesService {
                   messageDto.setReadAt(updatedReadMessage.getReadAt());
                 }
 
-
                 messageDto.setId(message.getId());
                 messageDto.setTopicId(message.getTopic().getId());
                 messageDto.setContent(message.getContent());

@@ -1,9 +1,12 @@
 package pl.infobazasolution.blablachat.component.topic.dao;
 
 import pl.infobazasolution.blablachat.common.AbstractDao;
+import pl.infobazasolution.blablachat.component.topic.dto.RecentTopicFilter;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicFilter;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
+import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
+import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -96,7 +99,6 @@ public class TopicDao extends AbstractDao<Topic, TopicFilter> {
 
             criteriaQuery.select(topicRoot);
 
-
             if (Objects.nonNull(filter.getFirstUserId())) {
                 Integer userId = filter.getFirstUserId();
 
@@ -107,6 +109,39 @@ public class TopicDao extends AbstractDao<Topic, TopicFilter> {
             }
 
             TypedQuery<Topic> topicTypedQuery = entityManager.createQuery(criteriaQuery);
+
+            return topicTypedQuery.getResultList();
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Topic> findAllRecentUserParticipatesIn(Integer userId, RecentTopicFilter filter) {
+        try {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Topic> criteriaQuery = criteriaBuilder.createQuery(Topic.class);
+
+            Root<Topic> topicRoot = criteriaQuery.from(Topic.class);
+
+            criteriaQuery.select(topicRoot);
+
+            if (Objects.nonNull(userId)) {
+                if (Objects.nonNull(filter.getStartIndex())) {
+                    criteriaQuery.where(criteriaBuilder.and(criteriaBuilder.or(
+                        criteriaBuilder.equal(topicRoot.get("first_user_id"), userId),
+                        criteriaBuilder.equal(topicRoot.get("second_user_id"), userId)
+                    ), criteriaBuilder.lt(topicRoot.get("id"), filter.getStartIndex())));
+                } else {
+                    criteriaQuery.where(criteriaBuilder.or(
+                        criteriaBuilder.equal(topicRoot.get("first_user_id"), userId),
+                        criteriaBuilder.equal(topicRoot.get("second_user_id"), userId)
+                    ));
+                }
+            } else {
+                return Collections.emptyList();
+            }
+
+            TypedQuery<Topic> topicTypedQuery = entityManager.createQuery(criteriaQuery).setMaxResults(filter.getNumberOfTopics());
 
             return topicTypedQuery.getResultList();
         } catch (Exception e) {
