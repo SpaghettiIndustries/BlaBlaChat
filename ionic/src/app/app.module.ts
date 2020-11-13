@@ -12,6 +12,7 @@ import { MessagesPopoverComponent } from './messages-popover/messages-popover.co
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HeaderInterceptor } from './interceptor/header.interceptor';
 import { ErrorInterceptor } from './interceptor/error.interceptor';
+import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
 
 @NgModule({
   declarations: [AppComponent, MessagesPopoverComponent],
@@ -19,6 +20,7 @@ import { ErrorInterceptor } from './interceptor/error.interceptor';
   imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     StatusBar,
     SplashScreen,
