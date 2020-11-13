@@ -5,5 +5,5 @@ export class User {
 
     createdAt: string;
 
-    authenticationToken?: string;
+    token?: string;
 }
