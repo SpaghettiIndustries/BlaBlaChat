@@ -22,9 +22,6 @@ public class LoginService {
     @Inject
     private UserTokenIssuer userTokenIssuer;
 
-    @Inject
-    private UserSession userSession;
-
     public String login(LoginUser loginUser, UriInfo uriInfo) throws AuthenticationException {
 
         UserFilter filter = new UserFilter();
@@ -38,9 +35,6 @@ public class LoginService {
             loginUser.setPassword(PasswordUtils.digestPassword(loginUser.getPassword()));
 
             if (loginUser.getPassword().equals(userEntity.getPassword())) {
-                userSession.setId(userEntity.getId());
-                Integer id = userSession.getId();
-
                 return userTokenIssuer.issueToken(userEntity.getId().toString(), LocalDateTime.now().plusDays(7L), uriInfo);
             }
 

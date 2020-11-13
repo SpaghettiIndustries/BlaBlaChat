@@ -1,5 +1,6 @@
 package pl.infobazasolution.blablachat.component.topic.service;
 
+import pl.infobazasolution.blablachat.common.util.AuthenticationUtils;
 import pl.infobazasolution.blablachat.component.message.dao.MessageDao;
 import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
 import pl.infobazasolution.blablachat.component.message.dto.MessageFilter;
@@ -10,6 +11,7 @@ import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicFilter;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.user.session.UserSession;
+import pl.infobazasolution.blablachat.security.jwt.util.KeyGenerator;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -25,30 +27,34 @@ public class GetTopicsService {
     private MessageDao messageDao;
 
     @Inject
-    private UserSession userSession;
+    private KeyGenerator keyGenerator;
 
-    public List<TopicDto> get() {
+    public List<TopicDto> get(String authorizationHeader) {
+        Integer userId = Integer.parseInt(AuthenticationUtils.parseJwtClaimsFromHeader(keyGenerator, authorizationHeader).getSubject());
+
         TopicFilter filter = new TopicFilter();
-        filter.setFirstUserId(userSession.getId());
+        filter.setFirstUserId(userId);
 
         List<Topic> topicEntities = topicDao.findAllUserParticipatesIn(filter);
 
-        return convertToDto(topicEntities);
+        return convertToDto(topicEntities, userId);
     }
 
-    public List<TopicDto> get(RecentTopicFilter filter) {
-        List<Topic> topicEntities = topicDao.findAllRecentUserParticipatesIn(userSession.getId(), filter);
+    public List<TopicDto> get(String authorizationHeader, RecentTopicFilter filter) {
+        Integer userId = Integer.parseInt(AuthenticationUtils.parseJwtClaimsFromHeader(keyGenerator, authorizationHeader).getSubject());
 
-        return convertToDto(topicEntities);
+        List<Topic> topicEntities = topicDao.findAllRecentUserParticipatesIn(userId, filter);
+
+        return convertToDto(topicEntities, userId);
     }
 
-    private List<TopicDto> convertToDto(List<Topic> topicEntities) {
+    private List<TopicDto> convertToDto(List<Topic> topicEntities, Integer userId) {
         if (!topicEntities.isEmpty()) {
             List<TopicDto> topics = topicEntities.stream().map(topic -> {
                 TopicDto topicDto = new TopicDto();
 
                 topicDto.setId(topic.getId());
-                topicDto.setSecondUserId(topic.getFirstUser().getId().equals(userSession.getId()) ? topic.getSecondUser().getId() : topic.getFirstUser().getId());
+                topicDto.setSecondUserId(topic.getFirstUser().getId().equals(userId) ? topic.getSecondUser().getId() : topic.getFirstUser().getId());
 
                 MessageFilter messageFilter = new MessageFilter();
                 messageFilter.setTopicId(topic.getId());

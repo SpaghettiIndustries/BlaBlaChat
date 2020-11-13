@@ -13,7 +13,7 @@ public class GetAllTopicsAction {
     @Inject
     private GetTopicsService getTopicsService;
 
-    public List<TopicDto> execute() {
-        return getTopicsService.get();
+    public List<TopicDto> execute(String authorizationHeader) {
+        return getTopicsService.get(authorizationHeader);
     }
 }

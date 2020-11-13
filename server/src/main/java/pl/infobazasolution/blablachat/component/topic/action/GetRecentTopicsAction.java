@@ -19,8 +19,8 @@ public class GetRecentTopicsAction {
     @Inject
     private GetTopicsService getTopicsService;
 
-    public List<TopicDto> execute(RecentTopicFilter filter) throws ValidationException {
+    public List<TopicDto> execute(String authorizationHeader, RecentTopicFilter filter) throws ValidationException {
         if (recentTopicFilterValidator.validate(filter));
-            return getTopicsService.get(filter);
+            return getTopicsService.get(authorizationHeader, filter);
     }
 }

@@ -13,10 +13,10 @@ export class AboutPage implements OnInit {
 
   currentUser: User;
 
-  constructor(private authenticationService: AuthenticationService)
-  {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  constructor(private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(user => this.currentUser = user);
   }
+
   ngOnInit() {
   }
 

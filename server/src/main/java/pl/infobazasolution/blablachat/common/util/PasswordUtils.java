@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.util.Base64;
 
 public class PasswordUtils {
+
     public static String digestPassword(String plainTextPassword) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

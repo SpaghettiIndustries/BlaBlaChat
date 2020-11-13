@@ -8,6 +8,7 @@ import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -24,16 +25,16 @@ public class TopicController {
     @Path("/get_all")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<TopicDto> getAllTopics() {
-        return getAllTopicsAction.execute();
+    public List<TopicDto> getAllTopics(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        return getAllTopicsAction.execute(authorizationHeader);
     }
 
     @POST
     @Path("/get_recent")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<TopicDto> getRecentTopics(RecentTopicFilter filter) throws ValidationException {
-        return getRecentTopicsAction.execute(filter);
+    public List<TopicDto> getRecentTopics(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader, RecentTopicFilter filter) throws ValidationException {
+        return getRecentTopicsAction.execute(authorizationHeader, filter);
     }
 
 

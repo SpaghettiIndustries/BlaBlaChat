@@ -2,6 +2,7 @@ package pl.infobazasolution.blablachat.security.jwt.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import pl.infobazasolution.blablachat.common.util.AuthenticationUtils;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +27,8 @@ public class HeaderJwtParser implements JwtParser {
             throw new NotAuthorizedException("Authorization header must be provided");
         }
 
-        String token = authorizationHeader.substring("Bearer".length()).trim();
-
         try {
-            Key key = keyGenerator.generateKey();
-            return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+            AuthenticationUtils.parseJwtClaimsFromHeader(keyGenerator, authorizationHeader);
         } catch (Exception e) {
             httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
