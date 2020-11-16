@@ -59,13 +59,13 @@ export class LoginPage implements OnInit {
           this.loginForm.reset();
           this.loading = false;
           this.error = null;
+          this.submitted = false;
         },
         error => {
           this.error = error;
           this.loading = false;
+          this.submitted = false;
         }
       );
-
-    this.submitted = false;
   }
 }

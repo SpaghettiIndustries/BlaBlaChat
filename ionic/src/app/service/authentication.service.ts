@@ -42,6 +42,7 @@ export class AuthenticationService {
       nick,
       password
     }).pipe(map(user => {
+      console.log("login post succeeded");
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.currentUserSubject.next(user);
       return user;
