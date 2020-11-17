@@ -10,8 +10,6 @@ import pl.infobazasolution.blablachat.component.topic.dto.RecentTopicFilter;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicFilter;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
-import pl.infobazasolution.blablachat.security.jwt.util.KeyGenerator;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -26,12 +24,7 @@ public class GetTopicsService {
     @Inject
     private MessageDao messageDao;
 
-    @Inject
-    private KeyGenerator keyGenerator;
-
-    public List<TopicDto> get(String authorizationHeader) {
-        Integer userId = Integer.parseInt(AuthenticationUtils.parseJwtClaimsFromHeader(keyGenerator, authorizationHeader).getSubject());
-
+    public List<TopicDto> get(Integer userId) {
         TopicFilter filter = new TopicFilter();
         filter.setFirstUserId(userId);
 
@@ -40,9 +33,7 @@ public class GetTopicsService {
         return convertToDto(topicEntities, userId);
     }
 
-    public List<TopicDto> get(String authorizationHeader, RecentTopicFilter filter) {
-        Integer userId = Integer.parseInt(AuthenticationUtils.parseJwtClaimsFromHeader(keyGenerator, authorizationHeader).getSubject());
-
+    public List<TopicDto> get(Integer userId, RecentTopicFilter filter) {
         List<Topic> topicEntities = topicDao.findAllRecentUserParticipatesIn(userId, filter);
 
         return convertToDto(topicEntities, userId);

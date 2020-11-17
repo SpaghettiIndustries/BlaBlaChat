@@ -37,6 +37,7 @@
     </filter>
     <filter-mapping>
         <filter-name>jwt-token-needed-filter</filter-name>
+        <url-pattern>/api/topic/*</url-pattern>
         <url-pattern>/api/message/*</url-pattern>
         <url-pattern>/api/user/get</url-pattern>
         <url-pattern>/api/user/update</url-pattern>

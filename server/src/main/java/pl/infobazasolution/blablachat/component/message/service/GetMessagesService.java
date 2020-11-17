@@ -1,16 +1,11 @@
 package pl.infobazasolution.blablachat.component.message.service;
 
-import io.jsonwebtoken.Jwts;
 import pl.infobazasolution.blablachat.component.message.dao.MessageDao;
 import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
 import pl.infobazasolution.blablachat.component.message.dto.MessageFilter;
 import pl.infobazasolution.blablachat.component.message.entity.Message;
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
 import javax.inject.Inject;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -21,17 +16,14 @@ public class GetMessagesService {
     @Inject
     private MessageDao messageDao;
 
-    @Inject
-    private UserSession userSession;
-
-    public List<MessageDto> get(MessageFilter filter) {
+    public List<MessageDto> get(Integer userId, MessageFilter filter) {
         List<Message> messageEntities = messageDao.findRecent(filter);
 
         if (!messageEntities.isEmpty()) {
             List<MessageDto> messages = messageEntities.stream().map(message -> {
                 MessageDto messageDto = new MessageDto();
 
-                if (!message.getSender().equals(userSession.getId()) && Objects.isNull(message.getReadAt())) {
+                if (!message.getSender().equals(userId) && Objects.isNull(message.getReadAt())) {
                   message.setReadAt(ZonedDateTime.now());
 
                   Message updatedReadMessage = messageDao.update(message.getId(), message).get();
