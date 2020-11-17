@@ -1,6 +1,5 @@
 package pl.infobazasolution.blablachat.component.user.service;
 
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
 import pl.infobazasolution.blablachat.common.exception.AuthenticationException;
 import pl.infobazasolution.blablachat.common.util.PasswordUtils;
 import pl.infobazasolution.blablachat.component.user.dao.UserDao;

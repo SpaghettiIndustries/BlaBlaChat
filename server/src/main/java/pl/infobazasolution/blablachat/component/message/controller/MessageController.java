@@ -10,6 +10,7 @@ import pl.infobazasolution.blablachat.component.message.action.SendMessageAction
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -26,15 +27,15 @@ public class MessageController {
     @Path("/send")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public MessageDto sendMessage(NewMessage newMessage) throws ValidationException {
-        return sendMessageAction.execute(newMessage);
+    public MessageDto sendMessage(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader, NewMessage newMessage) throws ValidationException {
+        return sendMessageAction.execute(authorizationHeader, newMessage);
     }
 
     @POST
     @Path("/get")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MessageDto> getMessages(MessageFilter filter) throws ValidationException {
-        return getMessagesAction.execute(filter);
+    public List<MessageDto> getMessages(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader, MessageFilter filter) throws ValidationException {
+        return getMessagesAction.execute(authorizationHeader, filter);
     }
 }

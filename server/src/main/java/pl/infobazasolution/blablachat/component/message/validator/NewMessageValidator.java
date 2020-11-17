@@ -5,7 +5,6 @@ import pl.infobazasolution.blablachat.common.util.ValidationUtils;
 import pl.infobazasolution.blablachat.component.message.dto.NewMessage;
 import pl.infobazasolution.blablachat.component.topic.dao.TopicDao;
 import pl.infobazasolution.blablachat.component.user.dao.UserDao;
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
 import javax.inject.Inject;
 import java.util.Objects;
@@ -18,10 +17,7 @@ public class NewMessageValidator {
     @Inject
     private TopicDao topicDao;
 
-    @Inject
-    private UserSession userSession;
-
-    public Boolean validate(NewMessage newMessage) throws ValidationException {
+    public Boolean validate(Integer userId, NewMessage newMessage) throws ValidationException {
         if (!Objects.nonNull(newMessage.getReceiverId()) && !Objects.nonNull(newMessage.getTopicId()))
             throw new ValidationException("Wiadomość musi mieć zdefiniowanego odbiorcę lub istniejący temat");
 
@@ -32,7 +28,7 @@ public class NewMessageValidator {
             if (!ValidationUtils.topicExists(newMessage.getTopicId(), topicDao))
                 throw new ValidationException("Temat musi już istnieć");
 
-            if (!ValidationUtils.userBelongsToTopic(userSession.getId(), newMessage.getTopicId(), topicDao))
+            if (!ValidationUtils.userBelongsToTopic(userId, newMessage.getTopicId(), topicDao))
                 throw new ValidationException("Nie należysz do tej konwersacji");
         }
 

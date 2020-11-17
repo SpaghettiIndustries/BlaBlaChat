@@ -4,7 +4,6 @@ import pl.infobazasolution.blablachat.component.user.dao.UserDao;
 import pl.infobazasolution.blablachat.component.user.dto.DeleteUser;
 import pl.infobazasolution.blablachat.component.user.dto.UserFilter;
 import pl.infobazasolution.blablachat.component.user.entity.User;
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
 import javax.inject.Inject;
 import javax.validation.constraints.Null;
@@ -17,33 +16,16 @@ public class DeleteUserService {
     @Inject
     private UserDao userDao;
 
-    @Inject
-    private UserSession userSession;
+    public Boolean delete(Integer userId) {
+        Optional<User> userToDeleteEntityProbably = userDao.findById(userId);
+        User userToDeleteEntity = userToDeleteEntityProbably.get();
 
-    public Boolean delete() {
+        userToDeleteEntity.setEmail("");
+        userToDeleteEntity.setNick("Usunięto");
+        userToDeleteEntity.setDeletedAt(ZonedDateTime.now());
 
-        /*if (Objects.nonNull(deleteUser.getId()) || Objects.nonNull(deleteUser.getNick())) {*/
+        Optional<User> deletedUser = userDao.update(userToDeleteEntity.getId(), userToDeleteEntity);
 
-            UserFilter filter = new UserFilter();
-            User deleteUserEntity = new User();
-
-            /*if(Objects.nonNull(deleteUser.getId()))
-                filter.setId(deleteUser.getId());
-
-            if(Objects.nonNull(deleteUser.getNick()))
-                filter.setNick(deleteUser.getNick());*/
-
-            Optional<User> optional = userDao.find(filter);
-            deleteUserEntity = optional.get();
-
-            deleteUserEntity.setEmail(null);
-            deleteUserEntity.setNick("Usunięto");
-            deleteUserEntity.setDeletedAt(ZonedDateTime.now());
-
-            Optional<User> deletedUser = userDao.update(deleteUserEntity.getId(),deleteUserEntity);
-
-            return deletedUser.isPresent();
-        /*}*/
-        /*return false;*/
+        return deletedUser.isPresent();
     }
 }

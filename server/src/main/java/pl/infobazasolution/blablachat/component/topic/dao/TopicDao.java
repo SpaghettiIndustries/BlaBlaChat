@@ -4,7 +4,6 @@ import pl.infobazasolution.blablachat.common.AbstractDao;
 import pl.infobazasolution.blablachat.component.topic.dto.RecentTopicFilter;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicFilter;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;

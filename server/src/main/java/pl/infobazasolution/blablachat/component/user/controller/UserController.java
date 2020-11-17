@@ -7,14 +7,8 @@ import pl.infobazasolution.blablachat.component.user.dto.*;
 import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
 
 @Path("/user")
 public class UserController {
@@ -65,16 +59,16 @@ public class UserController {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UserDto update(UpdateUser updateUser) throws ValidationException {
-        return updateUserAction.execute(updateUser);
+    public UserDto update(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader, UpdateUser updateUser) throws ValidationException {
+        return updateUserAction.execute(authorizationHeader, updateUser);
     }
 
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean delete() {
-        return deleteUserAction.execute();
+    public Boolean delete(@HeaderParam(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
+        return deleteUserAction.execute(authorizationHeader);
     }
 
 }

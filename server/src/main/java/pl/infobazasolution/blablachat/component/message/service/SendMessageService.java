@@ -13,9 +13,7 @@ import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.topic.service.CreateTopicService;
 import pl.infobazasolution.blablachat.component.user.dao.UserDao;
 import pl.infobazasolution.blablachat.component.user.entity.User;
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
@@ -39,22 +37,19 @@ public class SendMessageService {
     @Inject
     private Event<MessageSentEvent> messageSentEvent;
 
-    @Inject
-    private UserSession userSession;
-
-    public MessageDto send(NewMessage newMessage) {
+    public MessageDto send(Integer userId, NewMessage newMessage) {
         Optional<Topic> topicMaybe;
 
         if (Objects.nonNull(newMessage.getReceiverId())) {
             TopicFilter filter = new TopicFilter();
-            filter.setFirstUserId(userSession.getId());
+            filter.setFirstUserId(userId);
             filter.setSecondUserId(newMessage.getReceiverId());
 
             topicMaybe = topicDao.find(filter);
 
             if (!topicMaybe.isPresent()) {
                 NewTopic newTopic = new NewTopic();
-                newTopic.setFirstUserId(userSession.getId());
+                newTopic.setFirstUserId(userId);
                 newTopic.setSecondUserId(newMessage.getReceiverId());
 
                 TopicDto createdTopic = createTopicService.create(newTopic);
@@ -69,7 +64,7 @@ public class SendMessageService {
 
         if (topicMaybe.isPresent()) {
             Topic topic = topicMaybe.get();
-            User sender = userDao.findById(userSession.getId()).get();
+            User sender = userDao.findById(userId).get();
 
             Message newMessageEntity = new Message();
 

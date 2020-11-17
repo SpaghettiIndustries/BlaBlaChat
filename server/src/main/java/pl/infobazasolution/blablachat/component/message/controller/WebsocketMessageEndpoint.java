@@ -1,17 +1,14 @@
 package pl.infobazasolution.blablachat.component.message.controller;
 
-import pl.infobazasolution.blablachat.component.message.dto.MessageDto;
+import pl.infobazasolution.blablachat.common.websocket.ServletAwareConfigurator;
 import pl.infobazasolution.blablachat.component.message.encoder.MessageSentEventEncoder;
 import pl.infobazasolution.blablachat.component.message.event.MessageSentEvent;
 import pl.infobazasolution.blablachat.component.topic.dao.TopicDao;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
-import pl.infobazasolution.blablachat.component.user.session.UserSession;
 
-import javax.enterprise.event.Observes;
 import javax.enterprise.event.ObservesAsync;
 import javax.inject.Inject;
 import javax.websocket.*;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.*;
@@ -19,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint(
     value = "/socket/{socketId}",
+    configurator = ServletAwareConfigurator.class,
     encoders = MessageSentEventEncoder.class
 )
 public class WebsocketMessageEndpoint {
@@ -26,18 +24,15 @@ public class WebsocketMessageEndpoint {
     @Inject
     private TopicDao topicDao;
 
-    @Inject
-    private UserSession userSession;
-
     private Session session;
     private Integer userId;
 
     private static Set<WebsocketMessageEndpoint> endpoints = new CopyOnWriteArraySet<>();
 
     @OnOpen
-    public void onOpen(Session session) throws IOException {
+    public void onOpen(Session session, EndpointConfig config) throws IOException {
         this.session = session;
-        this.userId = userSession.getId();
+        this.userId = (Integer) config.getUserProperties().get("userId");
 
         endpoints.add(this);
     }
