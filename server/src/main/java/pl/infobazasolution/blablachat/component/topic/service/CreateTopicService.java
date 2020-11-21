@@ -5,6 +5,8 @@ import pl.infobazasolution.blablachat.component.topic.dto.NewTopic;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
 import pl.infobazasolution.blablachat.component.user.dao.UserDao;
+import pl.infobazasolution.blablachat.component.user.dto.UserDto;
+import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.inject.Inject;
 import java.time.ZonedDateTime;
@@ -21,8 +23,11 @@ public class CreateTopicService {
     public TopicDto create(NewTopic newTopic) {
         Topic newTopicEntity = new Topic();
 
-        newTopicEntity.setFirstUser(userDao.findById(newTopic.getFirstUserId()).get());
-        newTopicEntity.setSecondUser(userDao.findById(newTopic.getSecondUserId()).get());
+        User firstUserEntity = userDao.findById(newTopic.getFirstUserId()).get();
+        User secondUserEntity = userDao.findById(newTopic.getSecondUserId()).get();
+
+        newTopicEntity.setFirstUser(firstUserEntity);
+        newTopicEntity.setSecondUser(secondUserEntity);
         newTopicEntity.setCreatedAt(ZonedDateTime.now());
 
         Optional<Topic> topic = topicDao.create(newTopicEntity);
@@ -32,7 +37,14 @@ public class CreateTopicService {
             TopicDto createdTopicDto = new TopicDto();
 
             createdTopicDto.setId(createdTopicEntity.getId());
-            createdTopicDto.setSecondUserId(createdTopicEntity.getSecondUser().getId());
+
+            UserDto secondUserDto = new UserDto();
+            secondUserDto.setId(secondUserEntity.getId());
+            secondUserDto.setNick(secondUserEntity.getNick());
+            secondUserDto.setEmail(secondUserEntity.getEmail());
+            secondUserDto.setCreatedAt(secondUserEntity.getCreatedAt());
+
+            createdTopicDto.setSecondUser(secondUserDto);
             createdTopicDto.setCreatedAt(createdTopicEntity.getCreatedAt());
 
             return createdTopicDto;

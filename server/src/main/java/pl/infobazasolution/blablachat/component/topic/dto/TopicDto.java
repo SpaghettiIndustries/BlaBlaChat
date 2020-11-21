@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 public class TopicDto {
 
     private Integer id;
-    private Integer secondUserId;
+    private UserDto secondUser;
     private MessageDto lastMessage;
 
     private ZonedDateTime createdAt;
@@ -23,12 +23,12 @@ public class TopicDto {
         this.id = id;
     }
 
-    public Integer getSecondUserId() {
-        return secondUserId;
+    public UserDto getSecondUser() {
+        return secondUser;
     }
 
-    public void setSecondUserId(Integer secondUserId) {
-        this.secondUserId = secondUserId;
+    public void setSecondUser(UserDto secondUser) {
+        this.secondUser = secondUser;
     }
 
     public MessageDto getLastMessage() {

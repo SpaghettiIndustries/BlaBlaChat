@@ -102,8 +102,8 @@ public class TopicDao extends AbstractDao<Topic, TopicFilter> {
                 Integer userId = filter.getFirstUserId();
 
                 criteriaQuery.where(criteriaBuilder.or(
-                        criteriaBuilder.equal(topicRoot.get("first_user_id"), userId),
-                        criteriaBuilder.equal(topicRoot.get("second_user_id"), userId)
+                        criteriaBuilder.equal(topicRoot.get("firstUser"), userId),
+                        criteriaBuilder.equal(topicRoot.get("secondUser"), userId)
                 ));
             }
 

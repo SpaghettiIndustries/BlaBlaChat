@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import pl.infobazasolution.blablachat.common.util.AuthenticationUtils;
 
 import javax.inject.Inject;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.NotAuthorizedException;
@@ -19,20 +21,21 @@ public class HeaderJwtParser implements JwtParser {
     private KeyGenerator keyGenerator;
 
     @Override
-    public Claims parse(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        String authorizationHeader = httpServletResponse.getHeader(HttpHeaders.AUTHORIZATION);
+    public Claims parse(ServletRequest servletRequest, ServletResponse servletResponse) {
+        String authorizationHeader = ((HttpServletRequest) servletRequest).getHeader(HttpHeaders.AUTHORIZATION);
 
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            throw new NotAuthorizedException("Authorization header must be provided");
+            ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            throw new NotAuthorizedException("Nagłówek autoryzacyjny jest wymagany");
         }
 
         try {
-            AuthenticationUtils.parseJwtClaimsFromHeader(keyGenerator, authorizationHeader);
+            return AuthenticationUtils.parseJwtClaimsFromHeader(keyGenerator, authorizationHeader);
         } catch (Exception e) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
-        return null;
+        ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        throw new NotAuthorizedException("Pozyskanie danych z tokenu nie powiodło się");
     }
 }

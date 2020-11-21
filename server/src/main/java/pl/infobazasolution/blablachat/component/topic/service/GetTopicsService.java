@@ -10,6 +10,8 @@ import pl.infobazasolution.blablachat.component.topic.dto.RecentTopicFilter;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicDto;
 import pl.infobazasolution.blablachat.component.topic.dto.TopicFilter;
 import pl.infobazasolution.blablachat.component.topic.entity.Topic;
+import pl.infobazasolution.blablachat.component.user.dto.UserDto;
+import pl.infobazasolution.blablachat.component.user.entity.User;
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -45,7 +47,16 @@ public class GetTopicsService {
                 TopicDto topicDto = new TopicDto();
 
                 topicDto.setId(topic.getId());
-                topicDto.setSecondUserId(topic.getFirstUser().getId().equals(userId) ? topic.getSecondUser().getId() : topic.getFirstUser().getId());
+
+                User secondUserEntity = topic.getFirstUser().getId().equals(userId) ? topic.getSecondUser() : topic.getFirstUser();
+
+                UserDto secondUserDto = new UserDto();
+
+                secondUserDto.setId(secondUserEntity.getId());
+                secondUserDto.setNick(secondUserEntity.getNick());
+                secondUserDto.setEmail(secondUserEntity.getEmail());
+                secondUserDto.setCreatedAt(secondUserEntity.getCreatedAt());
+                topicDto.setSecondUser(secondUserDto);
 
                 MessageFilter messageFilter = new MessageFilter();
                 messageFilter.setTopicId(topic.getId());
